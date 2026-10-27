@@ -1,0 +1,38 @@
+---
+title: Self-hosted server
+summary: One Linux box that runs this site, MotoRoute, KernelOp and a dozen other services behind nginx and Cloudflare tunnels.
+summaryFr: Un serveur Linux qui fait rouler ce site, MotoRoute, KernelOp et une douzaine d’autres services derrière nginx et des tunnels Cloudflare.
+year: 2024 – now
+role: Solo
+context: personal
+stack: [Ubuntu, nginx, systemd, Cloudflare Tunnel, Podman, PostgreSQL]
+status: maintained
+tier: 1
+order: 4
+---
+
+Almost everything on this site is served from a single machine I run myself. It started as a file server
+and grew every time I built something that needed to be online.
+
+## Layout
+
+```
+browser → Cloudflare → tunnel → nginx
+                                 ├─ /             this site (static files)
+                                 ├─ /motoroute    Next.js + NestJS API
+                                 ├─ /financing    Next.js + Postgres
+                                 ├─ /budgeting    Next.js
+                                 └─ …
+kernelop.com → same tunnel → its own nginx server block
+```
+
+- **No open ports.** Cloudflare tunnels connect outward from the box, so the router forwards nothing.
+- **One service per app** under systemd, with a restart policy and logs in journald.
+- **nginx routes by path and hostname.** New apps get a `location` block, not a new server.
+- **Static where possible.** This site is plain files. Deploys build into a new folder and swap a symlink,
+  so a deploy never serves half a site and rolling back is one command.
+
+## Also running
+
+A file server, a RustDesk relay for remote support, Ollama for running models locally, VMs for testing,
+and Podman containers built on UBI9 images for network-automation experiments.

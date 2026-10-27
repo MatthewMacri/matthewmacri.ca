@@ -1,0 +1,53 @@
+---
+title: MotoRoute Pro
+summary: A route planner for motorcycles that looks for curvy roads instead of the fastest ones. Web app is live; the iOS app is in progress.
+summaryFr: Un planificateur d’itinéraires pour la moto qui cherche les routes sinueuses plutôt que les plus rapides. L’app web est en ligne; l’app iOS est en cours.
+year: 2024 – now
+role: Solo
+context: personal
+stack: [NestJS, PostgreSQL + PostGIS, Next.js, Expo, Python, Redis]
+status: live
+links:
+  live: https://matthewmacri.ca/motoroute
+tier: 1
+order: 1
+cover:
+  src: ../../assets/motoroute.png
+  alt: MotoRoute Pro landing page with a motorcycle parked by the water at sunset.
+  caption: The landing page at matthewmacri.ca/motoroute.
+---
+
+## Why
+
+Map apps optimize for getting there. On a motorcycle you often want the opposite: a longer route that
+stays off highways and finds roads with actual turns in them. Getting that out of Google Maps means
+dragging the line around one waypoint at a time.
+
+## What it does
+
+You pick a start and an end. MotoRoute generates candidate routes, scores them for curvature and
+elevation change, shows the weather along the way, and lets you save and share the ones you like.
+
+## How it's built
+
+It's a Turborepo monorepo with five pieces:
+
+- **API**: NestJS with PostgreSQL and PostGIS. Road segments are stored as geometry, so "find twisty roads
+  within 50 km of here" is a spatial query instead of a loop. Long jobs go through BullMQ on Redis.
+- **Scoring**: a shared TypeScript package (`curvature.ts`, `elevation.ts`, `scoring.ts`) that both the
+  API and the web client use, so the score you see in the browser matches the one the server ranked by.
+- **Geo service**: a Python service with GeoPandas and Shapely for the heavier geometry work: curve
+  detection and elevation analysis on raw road data.
+- **Web**: Next.js with Mapbox GL for the map and elevation chart.
+- **Mobile**: Expo with WatermelonDB, so saved routes still work with no signal, which is most of the
+  roads worth riding.
+
+It runs on my own server behind nginx and a Cloudflare tunnel, next to this site.
+
+## The hard part
+
+Defining "curvy" in a way a computer agrees with. The scorer walks the route in 50 m steps and compares
+the compass bearing of each step with the next. A change over 15° counts as a curve; the size of the change
+over that distance gives its sharpness and an estimated radius. A route is then summarized by curves per
+kilometre, average and peak sharpness, and how much those vary, which is what separates a long string of
+sweepers from a grid of city corners.

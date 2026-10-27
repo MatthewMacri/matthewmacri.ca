@@ -1,0 +1,128 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Experience from './Experience.astro';
+import { education, extras } from '../data/experience';
+import { site, type Lang } from '../data/site';
+import portrait from '../assets/matthew.png';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+---
+
+<Base
+  lang={lang}
+  title={fr ? 'À propos' : 'About'}
+  alternate={fr ? '/about/' : '/fr/about/'}
+  description={fr
+    ? 'Qui je suis, où j’ai travaillé et ce que j’étudie.'
+    : 'Who I am, where I’ve worked and what I’m studying.'}
+>
+  <section>
+    <h1>{fr ? 'À propos' : 'About'}</h1>
+    <figure class="portrait">
+      <Image src={portrait} alt="Matthew Macri" width={280} height={280} loading="eager" />
+    </figure>
+    {fr ? (
+      <>
+        <p>
+          Je suis basé à Montréal. J’ai fait mon DEC en informatique à Vanier, et je commence
+          maintenant un baccalauréat en génie informatique à Concordia.
+        </p>
+        <p>
+          En parallèle, je travaille chez Tokidos, où j’ai commencé au soutien technique et où je suis maintenant
+          développeur, et je m’occupe du site web d’Euro Gear. J’ai aussi fondé KernelOp, un petit studio qui fait des
+          sites et des outils pour d’autres entreprises.
+        </p>
+        <p>
+          La plupart de mes projets personnels roulent sur un serveur que j’administre moi-même, y compris ce site. J’aime avoir la
+          main sur toute la chaîne, du code jusqu’au DNS.
+        </p>
+      </>
+    ) : (
+      <>
+        <p>
+          I’m based in Montréal. I did my DEC in Computer Science at Vanier and have just
+          started a Computer Engineering degree at Concordia.
+        </p>
+        <p>
+          Alongside school I work at Tokidos, where I started in support and am now a developer, and I look after
+          the Euro Gear website. I also started KernelOp, a small studio that builds sites and tools for other
+          businesses.
+        </p>
+        <p>
+          Most of my own projects run on a server I look after myself, this site included. I like owning the whole path, from
+          the code down to DNS.
+        </p>
+      </>
+    )}
+  </section>
+
+  <section aria-labelledby="exp">
+    <h2 id="exp">{fr ? 'Expérience' : 'Experience'}</h2>
+    <Experience lang={lang} />
+  </section>
+
+  <section aria-labelledby="edu">
+    <h2 id="edu">{fr ? 'Études' : 'Education'}</h2>
+    <ul class="plain">
+      {education.map((e) => (
+        <li class="row">
+          <span class="when meta">{e.period[lang].slice(0, 4)}</span>
+          <div>
+            <div class="title">{e.school}</div>
+            <p class="desc">{e.degree[lang]}</p>
+            <p class="desc muted small">{e.note[lang]}</p>
+          </div>
+          <span></span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section aria-labelledby="else">
+    <h2 id="else">{fr ? 'Aussi' : 'Also'}</h2>
+    <dl class="also">
+      <dt class="meta">{fr ? 'Hackathons' : 'Hackathons'}</dt>
+      <dd>
+        {extras.events.map((ev) => (
+          <div>{ev.name} {ev.year} <span class="muted">· {ev.note[lang]}</span></div>
+        ))}
+      </dd>
+      <dt class="meta">{fr ? 'Certificat' : 'Certificate'}</dt>
+      <dd>{extras.certs.map((c) => <div>{c.name} <span class="muted">· {c.by}, {c.year}</span></div>)}</dd>
+      <dt class="meta">{fr ? 'Langues' : 'Languages'}</dt>
+      <dd>{extras.languages[lang]}</dd>
+      <dt class="meta">{fr ? 'Joindre' : 'Contact'}</dt>
+      <dd>
+        <a href={`mailto:${site.email}`}>{site.email}</a> · <a href={site.github}>GitHub</a> ·{' '}
+        <a href={site.linkedin}>LinkedIn</a>
+      </dd>
+    </dl>
+  </section>
+</Base>
+
+<style>
+  .portrait { float: right; width: 200px; margin: 6px 0 16px 24px; }
+  .portrait :global(img) { border-radius: 4px; }
+  @media (max-width: 600px) {
+    .portrait { float: none; width: 160px; margin: 24px 0; }
+  }
+  h1 { margin-bottom: 24px; }
+  .also {
+    display: grid;
+    grid-template-columns: 112px 1fr;
+    gap: 12px 16px;
+    margin: 0;
+  }
+  .also dt { padding-top: 4px; }
+  .also dd { margin: 0; }
+  @media (max-width: 600px) {
+    .also { grid-template-columns: 1fr; gap: 2px; }
+    .also dd { margin-bottom: 12px; }
+  }
+</style>

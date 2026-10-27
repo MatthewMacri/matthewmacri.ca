@@ -1,0 +1,22 @@
+---
+title: Market signals dashboard
+summary: Collects prices, news, filings and Reddit chatter on stocks and crypto, scores it, and emails me when something moves. Paper-trades its own signals.
+summaryFr: Agrège prix, nouvelles, dépôts réglementaires et discussions Reddit sur les actions et la crypto, puis m’envoie un courriel quand quelque chose bouge.
+year: 2026
+role: Solo
+context: personal
+stack: [Next.js, PostgreSQL, Prisma, Groq, node-cron]
+status: live
+tier: 2
+order: 6
+---
+
+A personal tool that runs all day on my server. Scheduled jobs pull prices from Finnhub, TwelveData and
+CoinGecko, news from RSS feeds, insider transactions and Reddit mentions, then compute technical
+indicators and a sentiment score per ticker. When a signal fires I get an email with the reasoning.
+
+To keep it honest, every signal is logged with its outcome, paper trades
+are placed automatically, and walk-forward backtests check whether a rule still works on data it wasn't
+tuned on.
+
+<p class="note">Private: it's behind a password because it's my own watchlist.</p>

@@ -1,0 +1,46 @@
+---
+title: KernelOp
+summary: My small software studio in Montréal. I built the bilingual site and the self-hosted pipeline that deploys it on every push.
+summaryFr: Mon petit studio logiciel à Montréal. J’ai bâti le site bilingue et le pipeline auto-hébergé qui le déploie à chaque push.
+year: 2026 – now
+role: Founder
+context: company
+stack: [Next.js, TypeScript, nginx, Cloudflare Tunnel, systemd]
+status: live
+links:
+  live: https://kernelop.com
+tier: 1
+order: 2
+cover:
+  src: ../../assets/kernelop.png
+  alt: The kernelop.com homepage with the headline "We build and run the software your business depends on."
+  caption: kernelop.com
+---
+
+KernelOp is where I take on outside work: websites, internal tools and the hosting that keeps them up.
+This page is about the parts I built for the studio itself.
+
+## The site
+
+A statically exported Next.js site in English and French, with the language picked from the browser and
+switchable on every page. The brand (wordmark, icon, avatar) is generated from a small Python script, so
+every variant comes from the same path data instead of being redrawn by hand.
+
+## Deploys
+
+There's no hosting provider in the middle. The pipeline is:
+
+1. A push to GitHub fires a webhook.
+2. The webhook endpoint only touches a trigger file. It doesn't run anything itself.
+3. A systemd path unit notices the file, runs the build as a regular user and rsyncs the output into
+   the web root. If a second push lands mid-build, it builds again.
+4. nginx serves it, and a Cloudflare tunnel exposes it without opening any ports on the box.
+
+Keeping the webhook dumb was deliberate. The public endpoint can't be talked into running a command, and a
+failed build leaves the last good version in place.
+
+## Email
+
+Inbound mail for the domain goes through Cloudflare Email Routing to a worker, which posts it to the
+server for delivery. SPF and DMARC are in place, and a BIMI record puts the logo next to messages in
+inboxes that support it.

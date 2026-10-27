@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectRow from '../../components/ProjectRow.astro';
+import { archive } from '../../data/archive';
+
+const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const main = all.filter((p) => p.data.tier === 1);
+const more = all.filter((p) => p.data.tier === 2);
+---
+
+<Base title="Work" description="Projects by Matthew Macri: MotoRoute Pro, KernelOp, Tokidos, a self-hosted server, and smaller work from school and hackathons.">
+  <section>
+    <h1>Work</h1>
+    <p class="muted intro">
+      The main projects first, then smaller ones, then school work. Anything with a ↗ is live or on GitHub.
+      Work I did for employers is described but not linked.
+    </p>
+  </section>
+
+  <section aria-labelledby="main-h">
+    <h2 id="main-h">Main projects</h2>
+    <ul class="plain">{main.map((p) => <ProjectRow project={p} />)}</ul>
+  </section>
+
+  <section aria-labelledby="more-h">
+    <h2 id="more-h">Smaller projects</h2>
+    <ul class="plain">{more.map((p) => <ProjectRow project={p} />)}</ul>
+  </section>
+
+  <section aria-labelledby="archive-h">
+    <h2 id="archive-h">Archive</h2>
+    <p class="muted small">Coursework and early projects, kept for the record.</p>
+    <table class="archive">
+      <thead>
+        <tr>
+          <th scope="col">Year</th>
+          <th scope="col">Project</th>
+          <th scope="col" class="hide-sm">Made for</th>
+          <th scope="col"><span class="visually-hidden">Link</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {archive.map((a) => (
+          <tr>
+            <td class="meta">{a.year}</td>
+            <td>
+              {a.name}
+              <div class="muted small">{a.what}</div>
+              <div class="meta">{a.stack}</div>
+            </td>
+            <td class="hide-sm muted small">{a.context}</td>
+            <td>{a.repo && <a class="meta" href={`https://github.com/${a.repo}`} aria-label={`${a.name} on GitHub`}>↗</a>}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+</Base>
+
+<style>
+  .intro { margin-top: 16px; }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+</style>

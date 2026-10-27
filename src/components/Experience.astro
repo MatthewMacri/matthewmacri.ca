@@ -1,0 +1,49 @@
+---
+import { experience } from '../data/experience';
+import type { Lang } from '../data/site';
+
+interface Props {
+  lang?: Lang;
+  // The homepage shows only the current role at each place.
+  compact?: boolean;
+}
+
+const { lang = 'en', compact = false } = Astro.props;
+---
+
+<ul class="plain">
+  {experience.map((e) => {
+    const roles = compact ? e.roles.slice(0, 1) : e.roles;
+    return (
+      <li class="row employer">
+        <span class="when meta">{e.roles.at(-1)!.period.en.match(/\d{4}/)?.[0]}</span>
+        <div>
+          <div class="title">
+            {e.url ? <a href={e.url}>{e.org}</a> : e.org}
+            <span class="meta"> · {e.where[lang]}</span>
+          </div>
+          <ul class="plain roles">
+            {roles.map((r) => (
+              <li>
+                <span>{r.title[lang]}</span> <span class="meta">{r.period[lang]}</span>
+                {!compact && <p class="desc muted">{r.note[lang]}</p>}
+              </li>
+            ))}
+            {compact && e.roles.length > 1 && (
+              <li class="meta">
+                {lang === 'fr' ? `+ ${e.roles.length - 1} rôles précédents` : `+ ${e.roles.length - 1} earlier roles`}
+              </li>
+            )}
+          </ul>
+        </div>
+        <span></span>
+      </li>
+    );
+  })}
+</ul>
+
+<style>
+  .roles { margin-top: 4px; }
+  .roles > li { margin-top: 6px; }
+  .roles .desc { margin: 2px 0 0; font-size: 15px; line-height: 24px; }
+</style>

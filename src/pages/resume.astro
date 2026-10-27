@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import { experience, education, extras } from '../data/experience';
+import { site } from '../data/site';
+
+const skills = [
+  ['Languages', 'TypeScript, JavaScript, Python, PHP, Dart, Java, C#, SQL'],
+  ['Frameworks', 'Next.js, React, NestJS, Flutter, Laravel, Flask, FastAPI'],
+  ['Data', 'PostgreSQL + PostGIS, SQLite, Firestore, Redis, Prisma'],
+  ['Ops', 'Linux, nginx, systemd, Docker/Podman, Cloudflare, AWS, GitHub Actions'],
+];
+---
+
+<Base title="Resume" description="Resume of Matthew Macri: experience, education and skills.">
+  <section class="head">
+    <h1>Matthew Macri</h1>
+    <p class="meta">
+      Montréal · <a href={`mailto:${site.email}`}>{site.email}</a> · <a href={site.url}>matthewmacri.ca</a> ·{' '}
+      <a href={site.github}>github.com/MatthewMacri</a>
+    </p>
+    <p class="no-print small muted">
+      Same content as everything else on this site, laid out to print. <button type="button" class="print" onclick="print()">Print or save as PDF</button>
+    </p>
+  </section>
+
+  <section aria-labelledby="r-exp">
+    <h2 id="r-exp">Experience</h2>
+    {experience.map((e) => (
+      <div class="block">
+        <h3>{e.org} <span class="meta">· {e.where.en}</span></h3>
+        {e.roles.map((r) => (
+          <div class="role">
+            <div class="line"><span>{r.title.en}</span><span class="meta">{r.period.en}</span></div>
+            <p class="muted small">{r.note.en}</p>
+          </div>
+        ))}
+      </div>
+    ))}
+  </section>
+
+  <section aria-labelledby="r-edu">
+    <h2 id="r-edu">Education</h2>
+    {education.map((e) => (
+      <div class="block">
+        <div class="line"><h3>{e.school}</h3><span class="meta">{e.period.en}</span></div>
+        <p class="small">{e.degree.en}. <span class="muted">{e.note.en}</span></p>
+      </div>
+    ))}
+    <p class="small">{extras.certs.map((c) => `${c.name}, ${c.by} (${c.year})`)}</p>
+  </section>
+
+  <section aria-labelledby="r-proj">
+    <h2 id="r-proj">Selected projects</h2>
+    <p class="small">
+      <strong>MotoRoute Pro</strong>: motorcycle route planner that scores roads for curvature. NestJS, PostGIS, Next.js, Expo, Python.
+      <br /><strong>KernelOp</strong>: bilingual studio site with a self-hosted, webhook-driven deploy pipeline.
+      <br /><strong>Self-hosted server</strong>: nginx, systemd and Cloudflare tunnels running a dozen apps, including this site.
+      <br /><span class="muted">More at matthewmacri.ca/work</span>
+    </p>
+  </section>
+
+  <section aria-labelledby="r-skills">
+    <h2 id="r-skills">Skills</h2>
+    <dl class="skills small">
+      {skills.map(([k, v]) => (<><dt class="meta">{k}</dt><dd>{v}</dd></>))}
+      <dt class="meta">Spoken</dt><dd>{extras.languages.en}</dd>
+    </dl>
+  </section>
+</Base>
+
+<style>
+  .head .meta { margin-top: 8px; }
+  .print {
+    font: inherit;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 2px 10px;
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  .print:hover { border-color: var(--accent); color: var(--accent); }
+  section { margin-top: 48px; }
+  h2 { font-size: 21px; line-height: 28px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+  h3 { font-size: 18px; line-height: 26px; }
+  .block { margin-bottom: 20px; }
+  .role { margin-top: 6px; }
+  .role p { margin: 0; }
+  .line { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; }
+  .skills { display: grid; grid-template-columns: 112px 1fr; gap: 6px 16px; margin: 0; }
+  .skills dd { margin: 0; }
+  @media print {
+    section { margin-top: 14pt; }
+    h2 { font-size: 13pt; }
+    h3 { font-size: 11.5pt; }
+  }
+</style>

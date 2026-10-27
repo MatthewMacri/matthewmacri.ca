@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectRow from './ProjectRow.astro';
+import Experience from './Experience.astro';
+import { site, type Lang } from '../data/site';
+import { t, fill } from '../data/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = t[lang];
+const selected = (await getCollection('projects', (p) => p.data.tier === 1)).sort((a, b) => a.data.order - b.data.order);
+const updated = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', { year: 'numeric', month: 'long', day: 'numeric' }).format(
+  new Date(site.nowUpdated + 'T12:00:00'),
+);
+---
+
+<Base
+  lang={lang}
+  alternate={lang === 'fr' ? '/' : '/fr/'}
+  description={lang === 'fr'
+    ? 'Matthew Macri, développeur full-stack à Montréal. Tokidos, Euro Gear, KernelOp, génie informatique à Concordia.'
+    : 'Matthew Macri, full-stack developer in Montréal. Tokidos, Euro Gear, KernelOp, Computer Engineering at Concordia.'}
+>
+  <section class="intro">
+    <h1>Matthew Macri</h1>
+    <p class="lede" set:html={s.intro} />
+  </section>
+
+  <section aria-labelledby="now">
+    <h2 id="now">{s.now} <span class="meta">{s.updated} {updated}</span></h2>
+    <ul class="plain now">
+      {s.nowItems.map(([k, v]) => (
+        <li><span class="meta">{k}</span><span>{v}</span></li>
+      ))}
+    </ul>
+  </section>
+
+  <section aria-labelledby="work">
+    <h2 id="work">{s.selected}</h2>
+    <ul class="plain">
+      {selected.map((p) => <ProjectRow project={p} lang={lang} />)}
+    </ul>
+    <p class="more"><a href="/work/">{s.allWork} →</a></p>
+  </section>
+
+  <section aria-labelledby="experience">
+    <h2 id="experience">{s.experience}</h2>
+    <Experience lang={lang} compact />
+  </section>
+
+  <section aria-labelledby="contact">
+    <h2 id="contact">{s.contact}</h2>
+    <p set:html={fill(s.contactBody, { email: site.email, github: site.github, linkedin: site.linkedin })} />
+  </section>
+</Base>
+
+<style>
+  .lede { margin-top: 16px; font-size: 19px; line-height: 30px; max-width: 34em; }
+  h2 .meta { font-family: var(--mono); margin-left: 8px; }
+  .now li {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 16px;
+    padding: 6px 0;
+  }
+  .now .meta { padding-top: 4px; }
+  @media (max-width: 600px) {
+    .now li { grid-template-columns: 1fr; gap: 0; }
+  }
+  .more { margin-top: 16px; }
+</style>

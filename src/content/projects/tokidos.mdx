@@ -1,0 +1,49 @@
+---
+title: Tokidos
+summary: Internal dashboards, data work and now a Flutter rewrite of the app, across five roles since 2024.
+summaryFr: Tableaux de bord internes, analyse de données et maintenant la réécriture de l’app en Flutter, en cinq rôles depuis 2024.
+year: 2024 – now
+role: Support → intern → full-stack developer
+context: work
+stack: [Flutter, JavaScript, Node.js, PHP, SQLite, AWS, Shopify]
+status: internal
+tier: 1
+order: 3
+confidential: true
+cover:
+  src: ../../assets/vanier-presentation.png
+  alt: Matthew presenting at a podium on the Vanier College stage, with Tokidos slides on the screen behind him.
+  caption: Presenting the internship project at Vanier.
+---
+
+I started at Tokidos in customer support in late 2024 and have moved through three internships into a
+full-time developer role. The code is private, so this is a description rather than a tour.
+
+## Internal tools (summer 2025)
+
+Customer and order data lived in several places: Shopify for orders, a subscription service for
+renewals, a fulfilment provider for shipping. Answering "where is this customer's box?" meant opening all
+of them.
+
+I built a PHP dashboard that pulls from those APIs into SQLite on a schedule and shows one view per
+customer, plus two smaller tools on top of it:
+
+- **KPI dashboard**: the numbers the team tracks, on one page that also works on a phone.
+- **Support dashboard**: groups incoming errors by pattern, so a problem that hits fifty customers shows
+  up as one row instead of fifty tickets.
+
+It ran on an EC2 instance. I presented it to the school at the end of the internship.
+
+## Data (fall 2025)
+
+Gameplay and voice metrics: which activities users came back to and where sessions dropped off. I built
+the dashboards for that, checked data quality, and tested the game recommendation system against what
+people actually played.
+
+## The app (2026)
+
+The current app is a WebView wrapped in a native shell. That made shipping easy but means slow loads,
+awkward auth and behaviour that differs between devices. I'm now rewriting it in Flutter as a fully
+native app, starting with authentication and the screens people use most.
+
+<p class="note">The code and data belong to Tokidos, so there are no links or screenshots of internal tools here.</p>

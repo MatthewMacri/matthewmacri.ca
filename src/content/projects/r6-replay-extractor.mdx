@@ -1,0 +1,17 @@
+---
+title: Siege replay extractor
+summary: Pulls round-by-round stats out of Rainbow Six Siege replay files in bulk, for reviewing team matches.
+summaryFr: Extrait en lot les statistiques manche par manche des fichiers de reprise de Rainbow Six Siege, pour analyser les matchs d’équipe.
+year: 2026
+role: Solo
+context: personal
+stack: [Python, Go]
+status: maintained
+tier: 2
+order: 9
+---
+
+Siege saves matches as binary `.rec` files. Parsing is built on
+[r6-dissect](https://github.com/redraskal/r6-dissect), an open-source Go parser, which I patched for the
+fields we needed. My Python layer batch-processes folders of replays and turns them into per-player and
+per-round stats our team could actually compare.

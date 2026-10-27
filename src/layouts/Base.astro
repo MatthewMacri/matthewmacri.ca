@@ -1,0 +1,186 @@
+---
+import '../styles/global.css';
+import { site, type Lang } from '../data/site';
+import { t } from '../data/i18n';
+import { build } from '../lib/build';
+
+interface Props {
+  title?: string;
+  description: string;
+  lang?: Lang;
+  // Path of the same page in the other language, when one exists.
+  alternate?: string;
+  jsonLd?: object;
+}
+
+const { title, description, lang = 'en', alternate, jsonLd } = Astro.props;
+const s = t[lang];
+const fullTitle = title ? `${title} · Matthew Macri` : 'Matthew Macri';
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const home = lang === 'fr' ? '/fr/' : '/';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => path === href.replace(/\/$/, '') || path.startsWith(href.replace(/\/$/, '') + '/');
+
+const nav = [
+  { href: '/work/', label: s.nav.work },
+  { href: lang === 'fr' ? '/fr/about/' : '/about/', label: s.nav.about },
+  { href: '/resume/', label: s.nav.resume },
+];
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: site.url,
+  jobTitle: 'Full-stack developer',
+  worksFor: [
+    { '@type': 'Organization', name: 'Tokidos' },
+    { '@type': 'Organization', name: 'Euro Gear', url: 'https://eurogearinc.com' },
+    { '@type': 'Organization', name: 'KernelOp', url: site.kernelop },
+  ],
+  alumniOf: [{ '@type': 'CollegeOrUniversity', name: 'Vanier College' }],
+  affiliation: { '@type': 'CollegeOrUniversity', name: 'Concordia University' },
+  address: { '@type': 'PostalAddress', addressLocality: 'Montréal', addressRegion: 'QC', addressCountry: 'CA' },
+  sameAs: [site.github, site.linkedin],
+};
+---
+
+<!doctype html>
+<html lang={lang === 'fr' ? 'fr-CA' : 'en-CA'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternate && (
+      <>
+        <link rel="alternate" hreflang={lang === 'fr' ? 'fr-CA' : 'en-CA'} href={canonical} />
+        <link rel="alternate" hreflang={lang === 'fr' ? 'en-CA' : 'fr-CA'} href={new URL(alternate, site.url).href} />
+      </>
+    )}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#f7f7f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${site.url}/og.png`} />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_CA' : 'en_CA'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd ?? person)} />
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">{s.skip}</a>
+    <div class="page">
+      <header class="site">
+        <a href={home} class="name">Matthew Macri</a>
+        <nav aria-label="Main">
+          {nav.map((n) => (
+            <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
+          ))}
+          {alternate && (
+            <a href={alternate} hreflang={lang === 'fr' ? 'en' : 'fr'} lang={lang === 'fr' ? 'en' : 'fr'} title={s.nav.other}>
+              {s.nav.otherShort}
+            </a>
+          )}
+        </nav>
+      </header>
+
+      <main id="main">
+        <slot />
+      </main>
+
+      <footer class="site meta">
+        <p>
+          Matthew Macri · <span id="clock">Montréal</span>
+        </p>
+        <p>
+          {s.lastUpdated} {build.date}
+          {build.sha && (
+            <>
+              {' · '}
+              <a href={`${build.repo}/commit/${build.sha}`}>{build.sha}</a>
+            </>
+          )}
+          {' · '}
+          <button type="button" id="theme" class="linkish">{s.theme}</button>
+        </p>
+      </footer>
+    </div>
+
+    <script is:inline define:vars={{ tz: site.timezone, suffix: s.footerTime, locale: lang === 'fr' ? 'fr-CA' : 'en-CA' }}>
+      const clock = document.getElementById('clock');
+      const tick = () => {
+        const time = new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: tz }).format(new Date());
+        clock.textContent = `${time} ${suffix}`;
+      };
+      tick();
+      setInterval(tick, 30000);
+
+      document.getElementById('theme').addEventListener('click', () => {
+        const root = document.documentElement;
+        const dark = root.dataset.theme
+          ? root.dataset.theme === 'dark'
+          : matchMedia('(prefers-color-scheme: dark)').matches;
+        root.dataset.theme = dark ? 'light' : 'dark';
+        try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  header.site {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    padding-top: 40px;
+  }
+  .name {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  nav {
+    display: flex;
+    gap: 20px;
+    font-size: 15px;
+  }
+  nav a { text-decoration: none; color: var(--muted); }
+  nav a:hover, nav a[aria-current='page'] { color: var(--text); }
+  nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--rule); }
+
+  footer.site {
+    margin: 96px 0 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+  }
+  footer.site p { margin: 0; }
+  .linkish {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+  }
+  .linkish:hover { color: var(--accent); text-decoration-color: var(--accent); }
+</style>
