@@ -42,7 +42,7 @@ const jsonLd = {
 
 <Base title={d.title} description={d.summary} jsonLd={jsonLd}>
   <article>
-    <section>
+    <section class="narrow">
       <p class="meta crumb"><a href="/work/">Work</a> / {contextLabel}</p>
       <h1>{d.title}</h1>
       <p class="lede">{d.summary}</p>
@@ -51,7 +51,7 @@ const jsonLd = {
         <div><dt>Year</dt><dd>{d.year}</dd></div>
         <div><dt>Role</dt><dd>{d.role}</dd></div>
         <div><dt>Status</dt><dd>{d.status}</dd></div>
-        <div><dt>Stack</dt><dd>{d.stack.join(' · ')}</dd></div>
+        <div><dt>Stack</dt><dd><ul class="chips">{d.stack.map((x) => <li>{x}</li>)}</ul></dd></div>
         {(d.links.live || d.links.repo) && (
           <div>
             <dt>Links</dt>
@@ -78,33 +78,54 @@ const jsonLd = {
   </article>
 
   <nav class="next" aria-label="Next project">
-    <span class="meta">Next</span>
-    <a href={`/work/${next.id}/`}>{next.data.title}</a>
+    <a href={`/work/${next.id}/`}>
+      <span class="meta">Next project</span>
+      <span class="t">{next.data.title} <span aria-hidden="true">→</span></span>
+      <span class="muted s">{next.data.summary}</span>
+    </a>
   </nav>
 </Base>
 
 <style>
-  .crumb { margin-bottom: 12px; }
-  .crumb a { text-decoration: none; }
-  .lede { margin-top: 12px; font-size: 19px; line-height: 30px; }
-  .facts { margin: 32px 0 0; border-top: 1px solid var(--rule); }
+  .crumb { margin-bottom: 14px; }
+  .crumb a { text-decoration: none; color: var(--accent); }
+  h1 { font-size: clamp(40px, 6vw, 60px); line-height: 1.04; letter-spacing: -0.025em; }
+  .lede { margin-top: 16px; font-size: 20px; line-height: 31px; color: var(--muted); }
+  .facts {
+    margin: 36px 0 0;
+    padding: 6px 20px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--card);
+  }
   .facts > div {
     display: grid;
     grid-template-columns: 96px 1fr;
     gap: 16px;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--rule);
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+    align-items: baseline;
   }
+  .facts > div:first-child { border-top: 0; }
   .facts dt { color: var(--muted); }
   .facts dd { margin: 0; color: var(--text); }
+  .facts dd a { color: var(--accent); }
+  .facts .chips li { background: var(--card); }
   .prose { margin-top: 48px; }
   .prose > :global(h2:first-child) { margin-top: 0; }
-  .next {
-    margin-top: 96px;
-    display: flex;
-    gap: 16px;
-    align-items: baseline;
-    font-family: var(--serif);
-    font-size: 21px;
+  .next { margin-top: 96px; max-width: var(--measure); }
+  .next a {
+    display: grid;
+    gap: 4px;
+    padding: 24px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--card);
+    text-decoration: none;
+    transition: border-color 160ms ease-out, box-shadow 160ms ease-out;
   }
+  .next a:hover { border-color: var(--rule-strong); box-shadow: var(--shadow); color: inherit; }
+  .next a:hover .t { color: var(--accent); }
+  .next .t { font: 500 26px/32px var(--serif); }
+  .next .s { font-size: 15px; line-height: 24px; }
 </style>

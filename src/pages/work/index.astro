@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import ProjectRow from '../../components/ProjectRow.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionHead from '../../components/SectionHead.astro';
 import { archive } from '../../data/archive';
 
 const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
@@ -11,25 +12,26 @@ const more = all.filter((p) => p.data.tier === 2);
 
 <Base title="Work" description="Projects by Matthew Macri: MotoRoute Pro, KernelOp, Tokidos, a self-hosted server, and smaller work from school and hackathons.">
   <section>
+    <p class="meta kicker">{all.length} projects · {archive.length} archived</p>
     <h1>Work</h1>
     <p class="muted intro">
-      The main projects first, then smaller ones, then school work. Anything with a ↗ is live or on GitHub.
+      The main projects first, then smaller ones, then school work. Each one has its own page with how it was built.
       Work I did for employers is described but not linked.
     </p>
   </section>
 
   <section aria-labelledby="main-h">
-    <h2 id="main-h">Main projects</h2>
-    <ul class="plain">{main.map((p) => <ProjectRow project={p} />)}</ul>
+    <SectionHead id="main-h" num="01" title="Main projects" />
+    <ul class="plain grid two">{main.map((p) => <ProjectCard project={p} />)}</ul>
   </section>
 
   <section aria-labelledby="more-h">
-    <h2 id="more-h">Smaller projects</h2>
-    <ul class="plain">{more.map((p) => <ProjectRow project={p} />)}</ul>
+    <SectionHead id="more-h" num="02" title="Smaller projects" />
+    <ul class="plain grid three">{more.map((p) => <ProjectCard project={p} size="compact" />)}</ul>
   </section>
 
   <section aria-labelledby="archive-h">
-    <h2 id="archive-h">Archive</h2>
+    <SectionHead id="archive-h" num="03" title="Archive" />
     <p class="muted small">Coursework and early projects, kept for the record.</p>
     <table class="archive">
       <thead>
@@ -59,7 +61,15 @@ const more = all.filter((p) => p.data.tier === 2);
 </Base>
 
 <style>
-  .intro { margin-top: 16px; }
+  .kicker { color: var(--accent); margin-bottom: 12px; }
+  h1 { font-size: clamp(44px, 7vw, 72px); line-height: 1; letter-spacing: -0.03em; }
+  .intro { margin-top: 20px; font-size: 19px; line-height: 30px; max-width: 34em; }
+  .grid { display: grid; gap: 20px; }
+  .two { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .three { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 960px) { .three { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 680px) { .two, .three { grid-template-columns: 1fr; } }
+  .archive { margin-top: 16px; }
   .visually-hidden {
     position: absolute;
     width: 1px;

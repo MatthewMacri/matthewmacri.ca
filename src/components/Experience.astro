@@ -9,41 +9,99 @@ interface Props {
 }
 
 const { lang = 'en', compact = false } = Astro.props;
+const isNow = (period: string) => /now/.test(period);
 ---
 
-<ul class="plain">
+<ol class="timeline">
   {experience.map((e) => {
     const roles = compact ? e.roles.slice(0, 1) : e.roles;
+    const start = e.roles.at(-1)!.period.en.match(/\d{4}/)?.[0];
+    const current = e.roles.some((r) => isNow(r.period.en));
+    const end = current ? (lang === 'fr' ? 'auj.' : 'now') : e.roles[0].period.en.match(/\d{4}(?!.*\d{4})/)?.[0];
     return (
-      <li class="row employer">
-        <span class="when meta">{e.roles.at(-1)!.period.en.match(/\d{4}/)?.[0]}</span>
-        <div>
-          <div class="title">
+      <li class:list={['employer', { current }]}>
+        <span class="when meta">{start === end ? start : `${start} – ${end}`}</span>
+        <div class="what">
+          <h3>
             {e.url ? <a href={e.url}>{e.org}</a> : e.org}
-            <span class="meta"> · {e.where[lang]}</span>
-          </div>
+            <span class="meta where">{e.where[lang]}</span>
+          </h3>
           <ul class="plain roles">
             {roles.map((r) => (
               <li>
-                <span>{r.title[lang]}</span> <span class="meta">{r.period[lang]}</span>
-                {!compact && <p class="desc muted">{r.note[lang]}</p>}
+                <div class="line">
+                  <span class="role">{r.title[lang]}</span>
+                  <span class="meta">{r.period[lang]}</span>
+                </div>
+                {!compact && <p class="note-text">{r.note[lang]}</p>}
               </li>
             ))}
             {compact && e.roles.length > 1 && (
-              <li class="meta">
+              <li class="meta more">
                 {lang === 'fr' ? `+ ${e.roles.length - 1} rôles précédents` : `+ ${e.roles.length - 1} earlier roles`}
               </li>
             )}
           </ul>
         </div>
-        <span></span>
       </li>
     );
   })}
-</ul>
+</ol>
 
 <style>
-  .roles { margin-top: 4px; }
-  .roles > li { margin-top: 6px; }
-  .roles .desc { margin: 2px 0 0; font-size: 15px; line-height: 24px; }
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .employer {
+    position: relative;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 4px 28px;
+    padding-bottom: 36px;
+  }
+  .employer:last-child { padding-bottom: 0; }
+  /* Vertical line and node, drawn between the date column and the content. */
+  .employer::before {
+    content: '';
+    position: absolute;
+    left: 133px;
+    top: 14px;
+    bottom: -6px;
+    width: 1px;
+    background: var(--rule);
+  }
+  .employer:last-child::before { display: none; }
+  .employer::after {
+    content: '';
+    position: absolute;
+    left: 129px;
+    top: 9px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1.5px solid var(--rule-strong);
+  }
+  .employer.current::after { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+
+  .when { padding-top: 4px; }
+  .current .when { color: var(--text); }
+  .what { padding-left: 4px; }
+  h3 { font-size: 22px; line-height: 30px; }
+  h3 a { text-decoration: none; }
+  h3 a:hover { text-decoration: underline; }
+  .where { margin-left: 10px; font-family: var(--mono); }
+
+  .roles { margin-top: 6px; }
+  .roles > li { margin-top: 10px; }
+  .roles > li:first-child { margin-top: 4px; }
+  .line { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+  .role { font-weight: 500; }
+  .note-text { margin: 4px 0 0; color: var(--muted); font-size: 15px; line-height: 24px; max-width: 60ch; }
+  .more { margin-top: 8px; }
+
+  @media (max-width: 600px) {
+    .employer { grid-template-columns: 1fr; padding-left: 24px; gap: 2px; }
+    .employer::before { left: 4px; top: 14px; }
+    .employer::after { left: 0; top: 6px; }
+    .what { padding-left: 0; }
+  }
 </style>

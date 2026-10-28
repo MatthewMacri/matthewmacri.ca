@@ -1,8 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import ProjectRow from './ProjectRow.astro';
+import ProjectCard from './ProjectCard.astro';
 import Experience from './Experience.astro';
+import SectionHead from './SectionHead.astro';
 import { site, type Lang } from '../data/site';
 import { t, fill } from '../data/i18n';
 
@@ -25,51 +26,167 @@ const updated = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', { yea
     ? 'Matthew Macri, développeur full-stack à Montréal. Tokidos, Euro Gear, KernelOp, génie informatique à Concordia.'
     : 'Matthew Macri, full-stack developer in Montréal. Tokidos, Euro Gear, KernelOp, Computer Engineering at Concordia.'}
 >
-  <section class="intro">
+  <section class="hero">
+    <div class="backdrop dots" aria-hidden="true"></div>
+    <p class="badge meta"><span class="pulse" aria-hidden="true"></span>{s.badge}</p>
     <h1>Matthew Macri</h1>
     <p class="lede" set:html={s.intro} />
+    <div class="actions">
+      <a class="btn primary" href="/work/">{s.seeWork} <span aria-hidden="true">→</span></a>
+      <a class="btn" href={`mailto:${site.email}`}>{s.emailMe}</a>
+    </div>
+    <dl class="glance">
+      {s.glance.map(([k, v]) => (
+        <div><dt class="meta">{k}</dt><dd>{v}</dd></div>
+      ))}
+    </dl>
+  </section>
+
+  <section aria-labelledby="work">
+    <SectionHead id="work" num="01" title={s.selected}>
+      <a href="/work/">{s.allWork} →</a>
+    </SectionHead>
+    <ul class="plain grid">
+      {selected.map((p) => <ProjectCard project={p} lang={lang} />)}
+    </ul>
   </section>
 
   <section aria-labelledby="now">
-    <h2 id="now">{s.now} <span class="meta">{s.updated} {updated}</span></h2>
+    <SectionHead id="now" num="02" title={s.now}>
+      <span class="meta">{s.updated} {updated}</span>
+    </SectionHead>
     <ul class="plain now">
       {s.nowItems.map(([k, v]) => (
-        <li><span class="meta">{k}</span><span>{v}</span></li>
+        <li><span class="meta k">{k}</span><span>{v}</span></li>
       ))}
     </ul>
   </section>
 
-  <section aria-labelledby="work">
-    <h2 id="work">{s.selected}</h2>
-    <ul class="plain">
-      {selected.map((p) => <ProjectRow project={p} lang={lang} />)}
-    </ul>
-    <p class="more"><a href="/work/">{s.allWork} →</a></p>
-  </section>
-
   <section aria-labelledby="experience">
-    <h2 id="experience">{s.experience}</h2>
+    <SectionHead id="experience" num="03" title={s.experience}>
+      <a href={lang === 'fr' ? '/fr/about/' : '/about/'}>{lang === 'fr' ? 'Détails' : 'Details'} →</a>
+    </SectionHead>
     <Experience lang={lang} compact />
   </section>
 
-  <section aria-labelledby="contact">
-    <h2 id="contact">{s.contact}</h2>
-    <p set:html={fill(s.contactBody, { email: site.email, github: site.github, linkedin: site.linkedin })} />
+  <section aria-labelledby="contact" class="contact">
+    <div class="panel">
+      <p class="meta idx">04 · {s.contact}</p>
+      <h2 id="contact">{s.contactTitle}</h2>
+      <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+      <p class="muted" set:html={fill(s.contactBody, { email: site.email, github: site.github, linkedin: site.linkedin })} />
+    </div>
   </section>
 </Base>
 
 <style>
-  .lede { margin-top: 16px; font-size: 19px; line-height: 30px; max-width: 34em; }
-  h2 .meta { font-family: var(--mono); margin-left: 8px; }
-  .now li {
+  .hero { position: relative; padding: 40px 0 8px; }
+  .backdrop {
+    position: absolute;
+    inset: -72px calc(50% - 50vw) -24px;
+    z-index: -1;
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 30% 35%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 80% at 30% 35%, #000 20%, transparent 75%);
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+  .hero h1 { font-size: clamp(48px, 8vw, 84px); line-height: 1; letter-spacing: -0.03em; }
+  .lede {
+    margin-top: 24px;
+    font-size: 21px;
+    line-height: 33px;
+    max-width: 36em;
+    color: var(--muted);
+  }
+  .lede :global(a) { color: var(--text); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+  .glance {
     display: grid;
-    grid-template-columns: 96px 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 56px 0 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--card);
+  }
+  .glance > div { padding: 16px 20px; border-left: 1px solid var(--rule); }
+  .glance > div:first-child { border-left: 0; }
+  .glance dd { margin: 4px 0 0; font-weight: 500; }
+  @media (max-width: 760px) {
+    .glance { grid-template-columns: 1fr 1fr; }
+    .glance > div:nth-child(3) { border-left: 0; }
+    .glance > div:nth-child(n + 3) { border-top: 1px solid var(--rule); }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .now {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
-    padding: 6px 0;
   }
-  .now .meta { padding-top: 4px; }
+  .now li {
+    padding: 18px 20px;
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: var(--card);
+  }
+  .now .k { display: block; margin-bottom: 4px; color: var(--accent); }
+  @media (max-width: 760px) {
+    .now { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    position: relative;
+    padding: 48px;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    background: var(--card);
+    overflow: hidden;
+  }
+  .panel::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 0 55%;
+    background-image: radial-gradient(var(--dot) 1px, transparent 1.2px);
+    background-size: 18px 18px;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 60%);
+    mask-image: linear-gradient(to right, transparent, #000 60%);
+    pointer-events: none;
+  }
+  .panel > * { position: relative; }
+  .panel .idx { color: var(--accent); margin-bottom: 12px; }
+  .panel h2 { font-size: 40px; line-height: 46px; }
+  .email {
+    display: inline-block;
+    margin: 20px 0 16px;
+    font-family: var(--serif);
+    font-size: clamp(22px, 4vw, 32px);
+    line-height: 1.2;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 6px;
+    word-break: break-all;
+  }
+  .panel p { max-width: 36em; }
   @media (max-width: 600px) {
-    .now li { grid-template-columns: 1fr; gap: 0; }
+    .panel { padding: 28px 22px; }
+    .panel h2 { font-size: 32px; line-height: 38px; }
   }
-  .more { margin-top: 16px; }
 </style>

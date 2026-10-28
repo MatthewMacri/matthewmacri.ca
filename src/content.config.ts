@@ -30,6 +30,8 @@ const projects = defineCollection({
           src: image(),
           alt: z.string(),
           caption: z.string().optional(),
+          // CSS object-position for cropped thumbnails; screenshots default to the top.
+          position: z.string().default('top'),
         })
         .optional(),
     }),

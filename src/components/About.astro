@@ -1,10 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Experience from './Experience.astro';
+import SectionHead from './SectionHead.astro';
 import { education, extras } from '../data/experience';
 import { site, type Lang } from '../data/site';
-import portrait from '../assets/matthew.png';
 
 interface Props {
   lang: Lang;
@@ -22,11 +21,11 @@ const fr = lang === 'fr';
     ? 'Qui je suis, où j’ai travaillé et ce que j’étudie.'
     : 'Who I am, where I’ve worked and what I’m studying.'}
 >
-  <section>
-    <h1>{fr ? 'À propos' : 'About'}</h1>
-    <figure class="portrait">
-      <Image src={portrait} alt="Matthew Macri" width={280} height={280} loading="eager" />
-    </figure>
+  <section class="top">
+    <p class="meta kicker">{fr ? 'À propos' : 'About'}</p>
+    <h1>{fr ? 'Développeur, étudiant en génie, et un peu sysadmin.' : 'Developer, engineering student, part-time sysadmin.'}</h1>
+    <div class="split">
+    <div class="bio">
     {fr ? (
       <>
         <p>
@@ -60,32 +59,41 @@ const fr = lang === 'fr';
         </p>
       </>
     )}
+    </div>
+    <aside class="facts" aria-label={fr ? 'En bref' : 'At a glance'}>
+      <dl>
+        <div><dt class="meta">{fr ? 'Basé à' : 'Based in'}</dt><dd>Montréal, QC</dd></div>
+        <div><dt class="meta">{fr ? 'Études' : 'Studying'}</dt><dd>{fr ? 'Génie informatique, Concordia' : 'Computer Engineering, Concordia'}</dd></div>
+        <div><dt class="meta">{fr ? 'Travail' : 'Working at'}</dt><dd>Tokidos · Euro Gear</dd></div>
+        <div><dt class="meta">{fr ? 'Fondateur' : 'Founder'}</dt><dd><a href={site.kernelop}>KernelOp</a></dd></div>
+        <div><dt class="meta">{fr ? 'Langues' : 'Languages'}</dt><dd>{extras.languages[lang]}</dd></div>
+      </dl>
+      <a class="btn primary" href={`mailto:${site.email}`}>{fr ? 'M’écrire' : 'Get in touch'}</a>
+    </aside>
+    </div>
   </section>
 
   <section aria-labelledby="exp">
-    <h2 id="exp">{fr ? 'Expérience' : 'Experience'}</h2>
+    <SectionHead id="exp" num="01" title={fr ? 'Expérience' : 'Experience'} />
     <Experience lang={lang} />
   </section>
 
   <section aria-labelledby="edu">
-    <h2 id="edu">{fr ? 'Études' : 'Education'}</h2>
-    <ul class="plain">
+    <SectionHead id="edu" num="02" title={fr ? 'Études' : 'Education'} />
+    <ul class="plain edu">
       {education.map((e) => (
-        <li class="row">
-          <span class="when meta">{e.period[lang].slice(0, 4)}</span>
-          <div>
-            <div class="title">{e.school}</div>
-            <p class="desc">{e.degree[lang]}</p>
-            <p class="desc muted small">{e.note[lang]}</p>
-          </div>
-          <span></span>
+        <li>
+          <span class="meta">{e.period[lang]}</span>
+          <h3>{e.school}</h3>
+          <p>{e.degree[lang]}</p>
+          <p class="muted small">{e.note[lang]}</p>
         </li>
       ))}
     </ul>
   </section>
 
   <section aria-labelledby="else">
-    <h2 id="else">{fr ? 'Aussi' : 'Also'}</h2>
+    <SectionHead id="else" num="03" title={fr ? 'Aussi' : 'Also'} />
     <dl class="also">
       <dt class="meta">{fr ? 'Hackathons' : 'Hackathons'}</dt>
       <dd>
@@ -107,17 +115,54 @@ const fr = lang === 'fr';
 </Base>
 
 <style>
-  .portrait { float: right; width: 200px; margin: 6px 0 16px 24px; }
-  .portrait :global(img) { border-radius: 4px; }
-  @media (max-width: 600px) {
-    .portrait { float: none; width: 160px; margin: 24px 0; }
+  .kicker { color: var(--accent); margin-bottom: 12px; }
+  .top h1 { font-size: clamp(36px, 5.5vw, 56px); line-height: 1.08; letter-spacing: -0.025em; max-width: 16em; }
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 56px;
+    margin-top: 40px;
+    align-items: start;
   }
-  h1 { margin-bottom: 24px; }
+  .bio { font-size: 18px; line-height: 30px; max-width: var(--measure); }
+  .bio p:first-child::first-line { font-weight: 500; }
+  .facts {
+    position: sticky;
+    top: 88px;
+    padding: 22px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--card);
+  }
+  .facts dl { margin: 0 0 20px; }
+  .facts dl > div { padding: 10px 0; border-top: 1px solid var(--rule); }
+  .facts dl > div:first-child { border-top: 0; padding-top: 0; }
+  .facts dd { margin: 2px 0 0; font-weight: 500; }
+  .facts .btn { width: 100%; justify-content: center; }
+  @media (max-width: 860px) {
+    .split { grid-template-columns: 1fr; gap: 32px; }
+    .facts { position: static; }
+  }
+
+  .edu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .edu li {
+    padding: 22px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--card);
+  }
+  .edu h3 { margin: 6px 0 6px; }
+  .edu p { margin: 0 0 6px; }
+  @media (max-width: 760px) {
+    .edu { grid-template-columns: 1fr; }
+  }
+
   .also {
     display: grid;
-    grid-template-columns: 112px 1fr;
-    gap: 12px 16px;
+    grid-template-columns: 140px 1fr;
+    gap: 14px 20px;
     margin: 0;
+    max-width: 820px;
   }
   .also dt { padding-top: 4px; }
   .also dd { margin: 0; }

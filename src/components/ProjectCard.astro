@@ -1,0 +1,130 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import type { Lang } from '../data/site';
+import github from '../data/github.json';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  lang?: Lang;
+  // Large cards show the cover image; compact ones are text only.
+  size?: 'large' | 'compact';
+}
+
+const { project, lang = 'en', size = 'large' } = Astro.props;
+const d = project.data;
+const summary = lang === 'fr' && d.summaryFr ? d.summaryFr : d.summary;
+const gh = d.links.repo ? (github as Record<string, { stars: number; pushed: string }>)[d.links.repo] : undefined;
+
+const contextLabel = {
+  en: { work: 'Work', personal: 'Personal', school: 'School', hackathon: 'Hackathon', company: 'Company' },
+  fr: { work: 'Travail', personal: 'Personnel', school: 'École', hackathon: 'Hackathon', company: 'Entreprise' },
+}[lang][d.context];
+const statusLabel = lang === 'fr'
+  ? { live: 'En ligne', 'in progress': 'En cours', maintained: 'Maintenu', archived: 'Archivé', internal: 'Interne' }[d.status]
+  : { live: 'Live', 'in progress': 'In progress', maintained: 'Maintained', archived: 'Archived', internal: 'Internal' }[d.status];
+const isLive = d.status === 'live' || d.status === 'maintained';
+---
+
+<li class:list={['card', size]}>
+  {size === 'large' && (
+    <div class="media">
+      {d.cover ? (
+        <Image src={d.cover.src} alt="" widths={[520, 1040]} sizes="(max-width: 760px) 100vw, 520px" style={`object-position: ${d.cover.position}`} />
+      ) : (
+        <div class="blank dots" aria-hidden="true">
+          <ul class="plain">
+            {d.stack.slice(0, 5).map((s) => <li>{s}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+  <div class="body">
+    <div class="top meta">
+      <span>{d.year}</span>
+      <span class="sep">/</span>
+      <span>{contextLabel}</span>
+      <span class="status">
+        {isLive && <span class="pulse" aria-hidden="true" />}
+        {statusLabel}
+      </span>
+    </div>
+    <h3>
+      <a href={`/work/${project.id}/`} lang={lang === 'fr' ? 'en' : undefined}>{d.title}</a>
+    </h3>
+    <p class="desc">{summary}</p>
+    <ul class="chips">
+      {d.stack.slice(0, size === 'large' ? 5 : 4).map((s) => <li>{s}</li>)}
+      {gh && gh.stars > 0 && <li>★ {gh.stars}</li>}
+    </ul>
+  </div>
+</li>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 160ms ease-out, box-shadow 160ms ease-out, transform 160ms ease-out;
+  }
+  .card:hover {
+    border-color: var(--rule-strong);
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+  }
+  .card:focus-within { border-color: var(--accent); }
+
+  .media {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    background: var(--surface);
+  }
+  .media :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms ease-out;
+  }
+  .card:hover .media :global(img) { transform: scale(1.025); }
+
+  .blank {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--surface);
+  }
+  .blank ul { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+  .blank li {
+    font: 13px/20px var(--mono);
+    color: var(--muted);
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 3px 10px;
+  }
+  .blank li:first-child { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--rule)); }
+
+  .body { display: flex; flex-direction: column; gap: 10px; padding: 20px 22px 22px; flex: 1; }
+  .compact .body { padding: 18px 20px 20px; }
+  .top { display: flex; gap: 8px; align-items: center; }
+  .sep { opacity: 0.5; }
+  .status { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; }
+
+  h3 { font-size: 24px; line-height: 30px; }
+  .compact h3 { font-size: 20px; line-height: 26px; }
+  h3 a { text-decoration: none; }
+  /* The whole card is clickable through the title link. */
+  h3 a::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+  .card:hover h3 a { color: var(--accent); }
+
+  .desc { margin: 0; color: var(--muted); font-size: 16px; line-height: 25px; }
+  .chips { margin-top: auto; padding-top: 6px; }
+</style>

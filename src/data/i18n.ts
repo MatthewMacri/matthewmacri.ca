@@ -6,6 +6,16 @@ export const t = {
     skip: 'Skip to content',
     intro:
       'I write software in Montréal. Full-stack developer at Tokidos, web and SEO at Euro Gear, and first-year Computer Engineering at Concordia. I also run <a href="https://kernelop.com">KernelOp</a>, a small software studio.',
+    badge: 'Full-stack developer · Montréal',
+    seeWork: 'See my work',
+    emailMe: 'Email me',
+    glance: [
+      ['Working at', 'Tokidos, Euro Gear'],
+      ['Studying', 'Computer Eng., Concordia'],
+      ['Running', 'KernelOp'],
+      ['Based in', 'Montréal, QC'],
+    ],
+    contactTitle: 'Let’s talk',
     now: 'Now',
     updated: 'updated',
     nowItems: [
@@ -19,7 +29,7 @@ export const t = {
     experience: 'Experience',
     contact: 'Contact',
     contactBody:
-      'Email is best: <a href="mailto:{email}">{email}</a>. I usually reply within a day or two. I’m also on <a href="{github}">GitHub</a> and <a href="{linkedin}">LinkedIn</a>.',
+      'Email is the best way to reach me, about work, a project or anything on this site. I usually reply within a day or two. I’m also on <a href="{github}">GitHub</a> and <a href="{linkedin}">LinkedIn</a>.',
     footerTime: 'in Montréal',
     lastUpdated: 'Last updated',
     theme: 'Theme',
@@ -29,6 +39,16 @@ export const t = {
     skip: 'Aller au contenu',
     intro:
       'J’écris du logiciel à Montréal. Développeur full-stack chez Tokidos, web et SEO chez Euro Gear, et première année en génie informatique à Concordia. Je dirige aussi <a href="https://kernelop.com">KernelOp</a>, un petit studio logiciel.',
+    badge: 'Développeur full-stack · Montréal',
+    seeWork: 'Voir mes projets',
+    emailMe: 'M’écrire',
+    glance: [
+      ['Je travaille chez', 'Tokidos, Euro Gear'],
+      ['J’étudie', 'Génie informatique, Concordia'],
+      ['Je dirige', 'KernelOp'],
+      ['Basé à', 'Montréal, QC'],
+    ],
+    contactTitle: 'On s’en parle',
     now: 'En ce moment',
     updated: 'mis à jour le',
     nowItems: [
@@ -42,7 +62,7 @@ export const t = {
     experience: 'Expérience',
     contact: 'Contact',
     contactBody:
-      'Le courriel, c’est le plus simple : <a href="mailto:{email}">{email}</a>. Je réponds habituellement en un jour ou deux. Aussi sur <a href="{github}">GitHub</a> et <a href="{linkedin}">LinkedIn</a>.',
+      'Le courriel, c’est le plus simple, que ce soit pour un poste, un projet ou une question sur ce site. Je réponds habituellement en un jour ou deux. Aussi sur <a href="{github}">GitHub</a> et <a href="{linkedin}">LinkedIn</a>.',
     footerTime: 'à Montréal',
     lastUpdated: 'Dernière mise à jour',
     theme: 'Thème',

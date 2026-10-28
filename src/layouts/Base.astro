@@ -79,20 +79,22 @@ const person = {
   </head>
   <body>
     <a class="skip" href="#main">{s.skip}</a>
-    <div class="page">
-      <header class="site">
-        <a href={home} class="name">Matthew Macri</a>
+    <header class="site">
+      <div class="page bar">
+        <a href={home} class="name"><span class="mark" aria-hidden="true">m</span>Matthew Macri</a>
         <nav aria-label="Main">
           {nav.map((n) => (
             <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
           ))}
           {alternate && (
-            <a href={alternate} hreflang={lang === 'fr' ? 'en' : 'fr'} lang={lang === 'fr' ? 'en' : 'fr'} title={s.nav.other}>
+            <a href={alternate} class="lang" hreflang={lang === 'fr' ? 'en' : 'fr'} lang={lang === 'fr' ? 'en' : 'fr'} title={s.nav.other}>
               {s.nav.otherShort}
             </a>
           )}
         </nav>
-      </header>
+      </div>
+    </header>
+    <div class="page">
 
       <main id="main">
         <slot />
@@ -139,27 +141,66 @@ const person = {
 
 <style>
   header.site {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 8px 24px;
-    padding-top: 40px;
+    height: 64px;
   }
   .name {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--serif);
     font-size: 19px;
     font-weight: 500;
     text-decoration: none;
+    white-space: nowrap;
   }
+  .name:hover { color: var(--text); }
+  .mark {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font: 500 19px/1 var(--serif);
+    padding-bottom: 3px;
+    transition: transform 160ms ease-out;
+  }
+  .name:hover .mark { transform: rotate(-6deg); }
   nav {
     display: flex;
-    gap: 20px;
+    align-items: center;
+    gap: 4px;
     font-size: 15px;
   }
-  nav a { text-decoration: none; color: var(--muted); }
-  nav a:hover, nav a[aria-current='page'] { color: var(--text); }
-  nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--rule); }
+  nav a {
+    text-decoration: none;
+    color: var(--muted);
+    padding: 6px 12px;
+    border-radius: 7px;
+    transition: background 140ms ease-out, color 140ms ease-out;
+  }
+  nav a:hover { color: var(--text); background: var(--surface); }
+  nav a[aria-current='page'] { color: var(--text); background: var(--surface); }
+  nav .lang { font: 500 12px/20px var(--mono); border: 1px solid var(--rule); margin-left: 6px; padding: 3px 8px; }
+  @media (max-width: 520px) {
+    .name { font-size: 0; gap: 0; }
+    .name .mark { font-size: 19px; }
+    nav a { padding: 6px 9px; }
+  }
 
   footer.site {
     margin: 96px 0 48px;
