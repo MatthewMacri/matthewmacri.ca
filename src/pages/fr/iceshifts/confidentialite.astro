@@ -1,0 +1,141 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { site } from '../../../data/site';
+---
+
+<Base
+  title="Ice Hockey Shifts : Confidentialité"
+  description="Politique de confidentialité de l'application iPhone Ice Hockey Shifts."
+  lang="fr"
+  alternate="/iceshifts/privacy/">
+  <section class="top narrow prose">
+    <p class="meta kicker">Ice Hockey Shifts</p>
+    <h1>Politique de confidentialité</h1>
+    <p class="meta">Dernière mise à jour : 2026-11-13 · <a href="/iceshifts/privacy/" hreflang="en">English</a></p>
+
+    <p>Ice Hockey Shifts (l'application mobile) est conçue par Matthew Macri, développeur indépendant à
+    Montréal (Québec). Cette politique explique ce que l'application fait de vos renseignements. En bref :
+    <strong>sans compte, rien ne quitte votre téléphone.</strong> Le compte est facultatif; si vous en
+    créez un, vos matchs sont conservés sur un serveur à Montréal afin de vous suivre sur un autre
+    téléphone et, lorsque Garmin le permettra, d'arriver d'eux-mêmes depuis Garmin Connect.</p>
+
+    <p>Il n'y a ni publicité, ni outil d'analyse, ni pistage, ni intelligence artificielle dans
+    l'application ou sur le serveur. Vos renseignements ne sont jamais vendus ni loués.</p>
+
+    <h2>Sans compte</h2>
+    <p>L'application lit les fichiers d'activité (<code>.fit</code>, ou un <code>.zip</code> qui en contient)
+    que vous choisissez d'y ouvrir, habituellement exportés de Garmin Connect après un match enregistré avec
+    l'application de montre Ice Hockey Shifts. Les matchs importés, les fichiers d'origine et vos réglages
+    (position et nombre de joueurs en uniforme) sont conservés uniquement sur votre téléphone, dans
+    l'espace de stockage de l'application. Comme les autres données d'applications, ils peuvent être inclus
+    dans la sauvegarde iCloud ou sur ordinateur de votre appareil, selon vos réglages. Rien n'est transmis
+    au développeur ni à qui que ce soit.</p>
+
+    <h2>Avec un compte</h2>
+    <p>Les comptes sont offerts à partir de la version 1.1 de l'application. Vous vous connectez avec
+    Apple; il n'y a pas de mot de passe. Lorsque vous êtes connecté, l'application et le serveur
+    conservent ce qui suit.</p>
+
+    <h3>Ce qui est conservé, et pourquoi</h3>
+    <ul>
+      <li><strong>Identité du compte.</strong> L'identifiant qu'Apple attribue à votre compte Apple pour
+      cette application, et l'adresse courriel qu'Apple communique (souvent une adresse de relais privée si
+      vous choisissez « Masquer mon adresse courriel »). Sert uniquement à reconnaître votre compte. Nous ne
+      vous envoyons aucun courriel promotionnel.</li>
+      <li><strong>Matchs enregistrés avec Ice Hockey Shifts.</strong> Pour chaque match : l'heure de début et
+      la durée, les tours et les présences, la fréquence cardiaque à chaque seconde et l'estimation de la
+      fréquence respiratoire enregistrée par votre montre, vos zones de fréquence cardiaque et votre
+      fréquence cardiaque maximale, la distance estimée par la foulée si votre montre l'enregistre, ainsi que
+      le modèle et la version logicielle de la montre. Sert à vous afficher vos matchs et à les garder à
+      jour entre vos téléphones. Les activités enregistrées par d'autres applications ne sont jamais
+      téléversées; elles restent sur votre téléphone.</li>
+      <li><strong>Vos réponses.</strong> Votre position et le nombre de joueurs en uniforme pour chaque
+      match.</li>
+      <li><strong>Sessions de connexion.</strong> Un jeton aléatoire par téléphone connecté, conservé sur le
+      serveur uniquement sous forme de hachage irréversible.</li>
+      <li><strong>Lien avec Garmin Connect</strong>, seulement si vous l'activez : votre identifiant
+      Garmin, les jetons d'accès délivrés par Garmin (chiffrés sur le serveur) et les autorisations que vous
+      avez accordées.</li>
+    </ul>
+
+    <h3>Ce qui est retiré avant tout envoi</h3>
+    <p>Le fichier d'activité d'une montre contient aussi votre profil Garmin (poids, taille, sexe,
+    fréquence cardiaque au repos, heures de coucher et de lever), des réglages de l'appareil comme votre
+    fuseau horaire, et les numéros de série de votre montre et des appareils qui y sont jumelés.
+    L'application ne s'en sert pas : elle les efface dans la copie qu'elle téléverse, et le serveur fait de
+    même pour tout ce que Garmin envoie. Ils ne sont pas conservés. Les matchs enregistrés avec Ice Hockey
+    Shifts ne contiennent aucune position GPS.</p>
+
+    <h3>Où c'est conservé</h3>
+    <p>Sur un serveur exploité par le développeur à Montréal (Québec, Canada), dans une base de données
+    sur ce serveur. Le compte et ses matchs ne sont copiés nulle part ailleurs. Les connexions au serveur
+    passent par Cloudflare, un fournisseur réseau qui protège le site et peut traiter les requêtes dans
+    d'autres pays, dont les États-Unis. Le serveur indique à Cloudflare de ne pas garder de copie de ses
+    réponses.</p>
+
+    <h3>Fournisseurs de services</h3>
+    <ul>
+      <li><strong>Apple</strong> gère « Se connecter avec Apple » et indique à l'application qui vous
+      êtes.</li>
+      <li><strong>Garmin</strong>, seulement si vous liez Garmin Connect : Garmin envoie au serveur les
+      matchs enregistrés avec Ice Hockey Shifts après la synchronisation de votre montre. La politique de
+      confidentialité de Garmin s'applique aux données que Garmin détient.</li>
+      <li><strong>Cloudflare</strong> achemine la connexion entre l'application et le serveur.</li>
+    </ul>
+    <p>Aucun d'eux ne reçoit vos matchs de notre part. Les données provenant de Garmin ne sont
+    communiquées à personne d'autre.</p>
+
+    <h3>Durée de conservation</h3>
+    <ul>
+      <li>Matchs et réponses : jusqu'à ce que vous supprimiez le match ou votre compte. Lorsque vous
+      supprimez un match, ses données et son fichier sont effacés immédiatement; seuls son identifiant et
+      l'heure de suppression sont gardés, pour que vos autres téléphones le retirent aussi. Ils sont
+      effacés avec le compte.</li>
+      <li>Sessions de connexion : jusqu'à ce que vous vous déconnectiez sur ce téléphone, ou 180 jours après
+      la connexion.</li>
+      <li>Lien Garmin : jusqu'à ce que vous le retiriez dans l'application ou dans Garmin Connect, ou que
+      vous supprimiez votre compte. Si vous retirez l'accès de l'application dans Garmin Connect, les matchs
+      venus de Garmin sont effacés.</li>
+      <li>Les journaux du serveur notent l'heure, le type de requête et son résultat, sans votre adresse IP.
+      Le serveur Web placé devant conserve les adresses IP 14 jours pour des raisons de sécurité, puis les
+      efface.</li>
+    </ul>
+
+    <h3>Supprimer votre compte</h3>
+    <p>Dans l'application : Réglages, Compte, Supprimer le compte. Le compte, tous les matchs et réponses
+    qu'il contient et le lien Garmin sont effacés immédiatement. Les matchs sur votre téléphone y restent.
+    Vous pouvez aussi en faire la demande par courriel (ci-dessous).</p>
+
+    <h2>Vos droits</h2>
+    <p>Vous pouvez demander à consulter les renseignements conservés à votre sujet, à en obtenir une copie
+    dans un format technologique structuré et couramment utilisé, à les faire corriger ou à les faire
+    supprimer, et vous pouvez retirer votre consentement en tout temps en supprimant votre compte.
+    Écrivez à la personne responsable de la protection des renseignements personnels ci-dessous; vous
+    recevrez une réponse dans un délai de 30 jours. Si la réponse ne vous satisfait pas, vous pouvez
+    porter plainte à la Commission d'accès à l'information du Québec ou au Commissariat à la protection de
+    la vie privée du Canada.</p>
+
+    <h2>Sécurité</h2>
+    <p>Les connexions sont chiffrées (HTTPS). Les jetons Garmin sont chiffrés sur le serveur, les jetons de
+    connexion ne sont conservés que sous forme de hachage, et le jeton de session sur votre téléphone est
+    gardé dans le trousseau iOS. Aucun système n'est parfaitement sûr; si un incident de confidentialité
+    présentait un risque de préjudice sérieux, vous et la Commission d'accès à l'information en seriez
+    avisés.</p>
+
+    <h2>Renseignements sur la santé</h2>
+    <p>Les données de fréquence cardiaque sont présentées à titre informatif pour l'entraînement.
+    L'application n'est pas un dispositif médical et ne donne aucun avis médical.</p>
+
+    <h2>Enfants</h2>
+    <p>Les comptes s'adressent aux personnes de 14 ans et plus. Un joueur plus jeune peut utiliser
+    l'application sans compte, ce qui ne transmet rien; un compte pour un enfant de moins de 14 ans
+    requiert le consentement d'un parent.</p>
+
+    <h2>Personne responsable de la protection des renseignements personnels</h2>
+    <p>Matthew Macri, <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+
+    <h2>Modifications</h2>
+    <p>Si cette politique change, la nouvelle version sera publiée sur cette page avec une nouvelle date.
+    En cas de divergence, la version française prévaut pour les utilisateurs du Québec.</p>
+  </section>
+</Base>
