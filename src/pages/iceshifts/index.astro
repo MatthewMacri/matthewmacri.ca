@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+---
+
+<Base title="Ice Hockey Shifts: Support" description="Help and support for the Ice Hockey Shifts iPhone app.">
+  <section class="top narrow prose">
+    <p class="meta kicker">Ice Hockey Shifts</p>
+    <h1>Support</h1>
+    <p>Ice Hockey Shifts shows the games recorded by the Ice Hockey Shifts app for Garmin watches: every
+    shift on a timeline, heart-rate zones split between the ice and the bench, and your heart rate through
+    the game.</p>
+
+    <h2>Getting a game into the app</h2>
+    <ol>
+      <li>Record a game with Ice Hockey Shifts on your Garmin watch and let it sync to Garmin Connect.</li>
+      <li>Export the activity's original file. On the Garmin Connect website, open the activity, then the
+      gear menu, then <em>Export Original</em>. This gives a <code>.zip</code>.</li>
+      <li>Save it to Files on your iPhone (for example with AirDrop or iCloud Drive), then tap <em>Import</em>
+      in Ice Hockey Shifts and pick the <code>.zip</code> or <code>.fit</code>.</li>
+    </ol>
+    <p>Activities recorded by other apps open with heart rate only, because only Ice Hockey Shifts marks
+    which laps were shifts.</p>
+
+    <h2>Why does it ask how many players were dressed?</h2>
+    <p>Your fair share of ice time depends on how many defence (or forwards) dressed that night, and no file
+    records it. The answer is saved with the game.</p>
+
+    <h2>Contact</h2>
+    <p>Questions, bugs or ideas: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    <p><a href="/iceshifts/privacy/">Privacy policy</a></p>
+  </section>
+</Base>

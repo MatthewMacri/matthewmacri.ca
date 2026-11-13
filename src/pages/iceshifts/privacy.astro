@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+---
+
+<Base title="Ice Hockey Shifts: Privacy" description="Privacy policy for the Ice Hockey Shifts iPhone app.">
+  <section class="top narrow prose">
+    <p class="meta kicker">Ice Hockey Shifts</p>
+    <h1>Privacy policy</h1>
+    <p class="meta">Last updated 2026-11-13</p>
+
+    <p>Ice Hockey Shifts (the phone app) does not collect any data. It has no account, no analytics, no
+    advertising and no tracking, and it does not send anything over the internet.</p>
+
+    <h2>What the app reads</h2>
+    <p>The app reads activity files (<code>.fit</code>, or a <code>.zip</code> containing them) that you choose
+    to open in it, usually exported from Garmin Connect after a game recorded with the Ice Hockey Shifts watch
+    app. These files contain the activity's times, laps and heart rate.</p>
+
+    <h2>Where it is kept</h2>
+    <p>Imported games, the original files and your settings (position and how many players were dressed) are
+    stored only on your phone, inside the app's own storage. Like other app data, they may be included in your
+    device's iCloud or computer backup, depending on your backup settings.</p>
+
+    <p>Removing a game in the app deletes it and its file from the phone. Deleting the app deletes everything
+    it stored. Your watch and Garmin Connect keep their own copies.</p>
+
+    <h2>Sharing</h2>
+    <p>Nothing is shared with the developer or anyone else. The app does not use any third-party service that
+    receives your data.</p>
+
+    <h2>Health information</h2>
+    <p>Heart-rate figures are shown for training interest only. The app is not a medical device and does not
+    give medical advice.</p>
+
+    <h2>Children</h2>
+    <p>The app collects no data from anyone, including children.</p>
+
+    <h2>Changes and contact</h2>
+    <p>If this policy changes, the new version will be posted on this page with a new date. Questions:
+    <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+  </section>
+</Base>
