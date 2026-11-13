@@ -9,35 +9,109 @@ import { site } from '../../data/site';
     <h1>Privacy policy</h1>
     <p class="meta">Last updated 2026-11-13</p>
 
-    <p>Ice Hockey Shifts (the phone app) does not collect any data. It has no account, no analytics, no
-    advertising and no tracking, and it does not send anything over the internet.</p>
+    <p>Ice Hockey Shifts (the phone app) is made by Matthew Macri, an individual developer in Montréal,
+    Québec. This policy explains what the app does with your information. In short: <strong>without an
+    account, nothing leaves your phone.</strong> An account is optional; if you create one, your games are
+    kept on a server in Montréal so they can follow you to another phone and, once Garmin allows it, arrive
+    from Garmin Connect by themselves.</p>
 
-    <h2>What the app reads</h2>
+    <p>There is no advertising, no analytics, no tracking and no artificial intelligence in the app or on
+    the server. Your information is never sold or rented.</p>
+
+    <h2>Without an account</h2>
     <p>The app reads activity files (<code>.fit</code>, or a <code>.zip</code> containing them) that you choose
     to open in it, usually exported from Garmin Connect after a game recorded with the Ice Hockey Shifts watch
-    app. These files contain the activity's times, laps and heart rate.</p>
+    app. Imported games, the original files and your settings (position and how many players were dressed)
+    are stored only on your phone, inside the app's own storage. Like other app data, they may be included
+    in your device's iCloud or computer backup, depending on your backup settings. Nothing is sent to the
+    developer or anyone else.</p>
 
-    <h2>Where it is kept</h2>
-    <p>Imported games, the original files and your settings (position and how many players were dressed) are
-    stored only on your phone, inside the app's own storage. Like other app data, they may be included in your
-    device's iCloud or computer backup, depending on your backup settings.</p>
+    <h2>With an account</h2>
+    <p>Accounts are available from version 1.1 of the app. You sign in with Apple; there is no password.
+    When you are signed in, the app and the server keep the following.</p>
 
-    <p>Removing a game in the app deletes it and its file from the phone. Deleting the app deletes everything
-    it stored. Your watch and Garmin Connect keep their own copies.</p>
+    <h3>What is kept, and why</h3>
+    <ul>
+      <li><strong>Account identity.</strong> The identifier Apple gives this app for your Apple Account, and
+      the email address Apple shares (often a private relay address if you choose "Hide My Email"). Used
+      only to recognise your account. We do not send you marketing email.</li>
+      <li><strong>Games recorded with Ice Hockey Shifts.</strong> For each game: its start time and length,
+      laps and shifts, per-second heart rate and the respiration-rate estimate your watch records, your
+      heart-rate zone settings and maximum heart rate, stride-based distance if your watch records one, and
+      the watch model and software version. Used to show you your games and to keep them in step between
+      your phones. Activities recorded by other apps are never uploaded; they stay on your phone.</li>
+      <li><strong>Your answers.</strong> Your position, and how many players were dressed for each game.</li>
+      <li><strong>Sign-in sessions.</strong> A random token per signed-in phone, stored on the server only as
+      a one-way hash.</li>
+      <li><strong>Garmin Connect link</strong>, only if you connect it: your Garmin user ID, the access tokens
+      Garmin issues (encrypted on the server) and the permissions you granted.</li>
+    </ul>
 
-    <h2>Sharing</h2>
-    <p>Nothing is shared with the developer or anyone else. The app does not use any third-party service that
-    receives your data.</p>
+    <h3>What is removed before anything is sent</h3>
+    <p>A watch's activity file also contains your Garmin profile (weight, height, gender, resting heart
+    rate, sleep and wake times), device settings such as your time zone, and the serial numbers of your
+    watch and the devices paired with it. The app does not use these, so it blanks them in the copy it
+    uploads, and the server does the same to anything Garmin sends. They are not stored. Games recorded
+    with Ice Hockey Shifts contain no GPS location.</p>
+
+    <h3>Where it is kept</h3>
+    <p>On a server operated by the developer in Montréal, Québec, Canada, in a database on that server.
+    The account and its games are not copied anywhere else. Connections to the server pass through
+    Cloudflare, a network provider that protects the website and may handle requests in other countries,
+    including the United States. The server tells Cloudflare not to keep copies of its answers.</p>
+
+    <h3>Service providers</h3>
+    <ul>
+      <li><strong>Apple</strong> handles Sign in with Apple and tells the app who you are.</li>
+      <li><strong>Garmin</strong>, only if you connect Garmin Connect: Garmin sends the server the games
+      recorded with Ice Hockey Shifts after your watch syncs. Garmin's own privacy policy applies to the
+      data Garmin holds.</li>
+      <li><strong>Cloudflare</strong> carries the connection between the app and the server.</li>
+    </ul>
+    <p>None of them receives your games from us. Data from Garmin is not shared with anyone else.</p>
+
+    <h3>How long it is kept</h3>
+    <ul>
+      <li>Games and answers: until you remove the game or delete your account. When you remove a game, its
+      data and file are deleted at once; only its identifier and the time of removal are kept, so that your
+      other phones remove it too. These are deleted with the account.</li>
+      <li>Sign-in sessions: until you sign out on that phone, or 180 days after you signed in on it.</li>
+      <li>Garmin link: until you disconnect it in the app or in Garmin Connect, or delete your account. If
+      you withdraw the app's access in Garmin Connect, games that came from Garmin are deleted.</li>
+      <li>Server logs record the time, the type of request and whether it worked, without your IP address.
+      The web server in front of it keeps IP addresses for 14 days for security, then deletes them.</li>
+    </ul>
+
+    <h3>Deleting your account</h3>
+    <p>In the app: Settings, Account, Delete account. This deletes the account, every game and answer
+    stored in it and the Garmin link, immediately. The games on your phone stay. You can also ask by
+    email (below).</p>
+
+    <h2>Your rights</h2>
+    <p>You can ask to see the information kept about you, to get a copy of it in a common format, to
+    correct it, or to have it deleted, and you can withdraw your consent at any time by deleting your
+    account. Write to the person in charge of personal information below; you will get an answer within
+    30 days. If you are not satisfied, you may complain to the Commission d'accès à l'information du Québec
+    or the Office of the Privacy Commissioner of Canada.</p>
+
+    <h2>Security</h2>
+    <p>Connections are encrypted (HTTPS). Garmin tokens are encrypted on the server, sign-in tokens are
+    stored only as hashes, and the session token on your phone is kept in the iOS keychain. No system is
+    perfectly secure; if a breach put your information at risk of serious harm, you and the Commission
+    d'accès à l'information would be told.</p>
 
     <h2>Health information</h2>
-    <p>Heart-rate figures are shown for training interest only. The app is not a medical device and does not
-    give medical advice.</p>
+    <p>Heart-rate figures are shown for training interest only. The app is not a medical device and does
+    not give medical advice.</p>
 
     <h2>Children</h2>
-    <p>The app collects no data from anyone, including children.</p>
+    <p>Accounts are meant for people 14 and older. A younger player may use the app without an account,
+    which sends nothing anywhere; an account for a child under 14 needs a parent's consent.</p>
 
-    <h2>Changes and contact</h2>
-    <p>If this policy changes, the new version will be posted on this page with a new date. Questions:
-    <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    <h2>Person in charge of personal information</h2>
+    <p>Matthew Macri, <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+
+    <h2>Changes</h2>
+    <p>If this policy changes, the new version will be posted on this page with a new date.</p>
   </section>
 </Base>
