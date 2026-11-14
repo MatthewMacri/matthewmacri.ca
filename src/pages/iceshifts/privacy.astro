@@ -83,6 +83,9 @@ import { site } from '../../data/site';
       you withdraw the app's access in Garmin Connect, games that came from Garmin are deleted.</li>
       <li>Server logs record the time, the type of request and whether it worked, without your IP address.
       The web server in front of it keeps IP addresses for 14 days for security, then deletes them.</li>
+      <li>Backups: the database is copied every night to a backup on the same server in Montréal, so it can
+      be restored after a failure. Backups are not sent anywhere else and are deleted after 15 days, so
+      something you delete is gone from the backups within 15 days.</li>
     </ul>
 
     <h3>Deleting your account</h3>
