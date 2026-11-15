@@ -11,7 +11,7 @@ import { site } from '../../../data/site';
   <section class="top narrow prose">
     <p class="meta kicker">Ice Hockey Shifts</p>
     <h1>Politique de confidentialité</h1>
-    <p class="meta">Dernière mise à jour : 2026-11-13 · <a href="/iceshifts/privacy/" hreflang="en">English</a></p>
+    <p class="meta">Dernière mise à jour : 2026-11-15 · <a href="/iceshifts/privacy/" hreflang="en">English</a></p>
 
     <p>Ice Hockey Shifts (l'application mobile) est conçue par Matthew Macri, développeur indépendant à
     Montréal (Québec). Cette politique explique ce que l'application fait de vos renseignements. En bref :
@@ -33,15 +33,25 @@ import { site } from '../../../data/site';
 
     <h2>Avec un compte</h2>
     <p>Les comptes sont offerts à partir de la version 1.1 de l'application. Vous vous connectez avec
-    Apple; il n'y a pas de mot de passe. Lorsque vous êtes connecté, l'application et le serveur
-    conservent ce qui suit.</p>
+    Apple ou, à partir de la version 1.2, aussi avec Google ou avec une adresse courriel et un mot de
+    passe. Lorsque vous êtes connecté, l'application et le serveur conservent ce qui suit.</p>
 
     <h3>Ce qui est conservé, et pourquoi</h3>
     <ul>
-      <li><strong>Identité du compte.</strong> L'identifiant qu'Apple attribue à votre compte Apple pour
-      cette application, et l'adresse courriel qu'Apple communique (souvent une adresse de relais privée si
-      vous choisissez « Masquer mon adresse courriel »). Sert uniquement à reconnaître votre compte. Nous ne
-      vous envoyons aucun courriel promotionnel.</li>
+      <li><strong>Identité du compte.</strong> Selon votre façon de vous connecter : l'identifiant qu'Apple
+      attribue à votre compte Apple pour cette application et l'adresse courriel qu'Apple communique
+      (souvent une adresse de relais privée si vous choisissez « Masquer mon adresse courriel »);
+      l'identifiant que Google attribue à votre compte Google pour cette application et son adresse
+      courriel; ou l'adresse courriel avec laquelle vous vous inscrivez. Sert uniquement à reconnaître votre
+      compte. Si deux façons de vous connecter partagent la même adresse courriel confirmée, elles ouvrent
+      le même compte.</li>
+      <li><strong>Mot de passe</strong>, seulement si vous vous inscrivez par courriel : conservé sur le
+      serveur uniquement sous forme d'empreinte à sens unique salée (scrypt), jamais tel que vous l'avez
+      tapé.</li>
+      <li><strong>Courriels du compte.</strong> Si vous vous inscrivez par courriel, nous envoyons un code
+      à 6 chiffres pour confirmer l'adresse, et un autre si vous demandez à réinitialiser votre mot de
+      passe. Les codes sont conservés uniquement sous forme d'empreinte à sens unique et cessent de
+      fonctionner après 15 minutes. Nous ne vous envoyons aucun courriel promotionnel.</li>
       <li><strong>Matchs enregistrés avec Ice Hockey Shifts.</strong> Pour chaque match : l'heure de début et
       la durée, les tours et les présences, la fréquence cardiaque à chaque seconde et l'estimation de la
       fréquence respiratoire enregistrée par votre montre, vos zones de fréquence cardiaque et votre
@@ -77,6 +87,11 @@ import { site } from '../../../data/site';
     <ul>
       <li><strong>Apple</strong> gère « Se connecter avec Apple » et indique à l'application qui vous
       êtes.</li>
+      <li><strong>Google</strong>, seulement si vous vous connectez avec Google : la page de connexion de
+      Google communique au serveur votre identifiant Google et votre adresse courriel. La politique de
+      confidentialité de Google s'applique à votre compte Google.</li>
+      <li><strong>Brevo</strong> (Sendinblue, France) achemine les courriels du compte : il reçoit votre
+      adresse courriel et le message avec son code, rien d'autre.</li>
       <li><strong>Garmin</strong>, seulement si vous liez Garmin Connect : Garmin envoie au serveur les
       matchs enregistrés avec Ice Hockey Shifts après la synchronisation de votre montre. La politique de
       confidentialité de Garmin s'applique aux données que Garmin détient.</li>

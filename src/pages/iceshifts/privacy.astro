@@ -10,7 +10,7 @@ import { site } from '../../data/site';
   <section class="top narrow prose">
     <p class="meta kicker">Ice Hockey Shifts</p>
     <h1>Privacy policy</h1>
-    <p class="meta">Last updated 2026-11-13 · <a href="/fr/iceshifts/confidentialite/" hreflang="fr">Français</a></p>
+    <p class="meta">Last updated 2026-11-15 · <a href="/fr/iceshifts/confidentialite/" hreflang="fr">Français</a></p>
 
     <p>Ice Hockey Shifts (the phone app) is made by Matthew Macri, an individual developer in Montréal,
     Québec. This policy explains what the app does with your information. In short: <strong>without an
@@ -30,14 +30,22 @@ import { site } from '../../data/site';
     developer or anyone else.</p>
 
     <h2>With an account</h2>
-    <p>Accounts are available from version 1.1 of the app. You sign in with Apple; there is no password.
-    When you are signed in, the app and the server keep the following.</p>
+    <p>Accounts are available from version 1.1 of the app. You sign in with Apple, or from version 1.2
+    also with Google or with an email address and password. When you are signed in, the app and the
+    server keep the following.</p>
 
     <h3>What is kept, and why</h3>
     <ul>
-      <li><strong>Account identity.</strong> The identifier Apple gives this app for your Apple Account, and
-      the email address Apple shares (often a private relay address if you choose "Hide My Email"). Used
-      only to recognise your account. We do not send you marketing email.</li>
+      <li><strong>Account identity.</strong> Depending on how you sign in: the identifier Apple gives this
+      app for your Apple Account and the email address Apple shares (often a private relay address if you
+      choose "Hide My Email"); the identifier Google gives this app for your Google Account and its email
+      address; or the email address you sign up with. Used only to recognise your account. If two ways of
+      signing in share the same confirmed email address, they open the same account.</li>
+      <li><strong>Password</strong>, only if you sign up with email: kept on the server only as a salted
+      one-way hash (scrypt), never as you typed it.</li>
+      <li><strong>Account emails.</strong> If you sign up with email, we send a 6-digit code to confirm the
+      address, and another if you ask to reset your password. Codes are stored only as a one-way hash and
+      stop working after 15 minutes. We do not send you marketing email.</li>
       <li><strong>Games recorded with Ice Hockey Shifts.</strong> For each game: its start time and length,
       laps and shifts, per-second heart rate and the respiration-rate estimate your watch records, your
       heart-rate zone settings and maximum heart rate, stride-based distance if your watch records one, and
@@ -66,6 +74,10 @@ import { site } from '../../data/site';
     <h3>Service providers</h3>
     <ul>
       <li><strong>Apple</strong> handles Sign in with Apple and tells the app who you are.</li>
+      <li><strong>Google</strong>, only if you sign in with Google: Google's sign-in page tells the server
+      your Google identifier and email address. Google's own privacy policy applies to your Google Account.</li>
+      <li><strong>Brevo</strong> (Sendinblue, France) delivers the account emails: it receives your email
+      address and the message with its code, and nothing else.</li>
       <li><strong>Garmin</strong>, only if you connect Garmin Connect: Garmin sends the server the games
       recorded with Ice Hockey Shifts after your watch syncs. Garmin's own privacy policy applies to the
       data Garmin holds.</li>
