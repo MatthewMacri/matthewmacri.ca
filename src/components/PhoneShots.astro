@@ -24,7 +24,7 @@ const shots = Object.entries(all)
 <div class:list={['phone-shots', variant]} role="list">
   {shots.map(({ img, label }) => (
     <figure role="listitem">
-      <Image src={img} alt={label} widths={[260, 520]} sizes={variant === 'watch' ? '160px' : '220px'} loading="lazy" />
+      <Image src={img} alt={label} widths={variant === 'watch' ? [320, 480] : [260, 520, 780]} sizes={variant === 'watch' ? '160px' : '220px'} loading="lazy" />
       <figcaption>{label}</figcaption>
     </figure>
   ))}
