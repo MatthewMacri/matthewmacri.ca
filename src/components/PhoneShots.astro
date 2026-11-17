@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+
+// Loads every screenshot in a folder under src/assets and renders them as a
+// scrollable row of phone screens. `dir` is relative to src/assets.
+interface Props {
+  dir: string;
+  labels?: Record<string, string>;
+}
+
+const { dir, labels = {} } = Astro.props;
+
+const all = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{png,jpg,jpeg,webp}', { eager: true });
+const shots = Object.entries(all)
+  .filter(([path]) => path.includes(`/assets/${dir}/`))
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => {
+    const key = path.split('/').pop()!.replace(/\.[^.]+$/, '').replace(/^\d+_/, '');
+    return { img: mod.default, label: labels[key] ?? key.replace(/_/g, ' ') };
+  });
+---
+
+<div class="phone-shots" role="list">
+  {shots.map(({ img, label }) => (
+    <figure role="listitem">
+      <Image src={img} alt={label} widths={[260, 520]} sizes="220px" loading="lazy" />
+      <figcaption>{label}</figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .phone-shots {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    margin: 28px 0;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .phone-shots figure {
+    margin: 0;
+    flex: 0 0 auto;
+    width: 220px;
+    scroll-snap-align: start;
+  }
+  .phone-shots :global(img) {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    background: #000;
+  }
+  .phone-shots figcaption {
+    margin-top: 10px;
+    text-align: center;
+    font: 12px/18px var(--mono);
+    color: var(--muted);
+    text-transform: capitalize;
+  }
+</style>

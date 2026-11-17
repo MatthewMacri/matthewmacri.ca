@@ -52,13 +52,17 @@ const jsonLd = {
         <div><dt>Role</dt><dd>{d.role}</dd></div>
         <div><dt>Status</dt><dd>{d.status}</dd></div>
         <div><dt>Stack</dt><dd><ul class="chips">{d.stack.map((x) => <li>{x}</li>)}</ul></dd></div>
-        {(d.links.live || d.links.repo) && (
+        {(d.links.live || d.links.repo || d.links.app) && (
           <div>
             <dt>Links</dt>
             <dd>
-              {d.links.live && <a href={d.links.live}>{new URL(d.links.live).host}{new URL(d.links.live).pathname.replace(/\/$/, '')} ↗</a>}
-              {d.links.live && d.links.repo && ' · '}
-              {d.links.repo && <a href={`https://github.com/${d.links.repo}`}>GitHub ↗</a>}
+              {[
+                d.links.live && <a href={d.links.live}>{new URL(d.links.live).host}{new URL(d.links.live).pathname.replace(/\/$/, '')} ↗</a>,
+                d.links.app && <a href={d.links.app}>App Store ↗</a>,
+                d.links.repo && <a href={`https://github.com/${d.links.repo}`}>GitHub ↗</a>,
+              ]
+                .filter(Boolean)
+                .map((el, i) => (i === 0 ? el : <>{' · '}{el}</>))}
             </dd>
           </div>
         )}

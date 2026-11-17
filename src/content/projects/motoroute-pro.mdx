@@ -1,7 +1,7 @@
 ---
 title: MotoRoute Pro
-summary: A route planner for motorcycles that looks for curvy roads instead of the fastest ones. Web app is live; the iOS app is in progress.
-summaryFr: Un planificateur d’itinéraires pour la moto qui cherche les routes sinueuses plutôt que les plus rapides. L’app web est en ligne; l’app iOS est en cours.
+summary: A route planner for motorcycles that looks for curvy roads instead of the fastest ones. Live on the web and on the App Store.
+summaryFr: "Un planificateur d’itinéraires pour la moto qui cherche les routes sinueuses plutôt que les plus rapides. En ligne sur le web et sur l’App Store."
 year: 2024 – now
 role: Solo
 context: personal
@@ -9,6 +9,7 @@ stack: [NestJS, PostgreSQL + PostGIS, Next.js, Expo, Python, Redis]
 status: live
 links:
   live: https://matthewmacri.ca/motoroute
+  app: https://apps.apple.com/ca/app/motoroute-pro/id6756211927
 tier: 1
 order: 1
 cover:
@@ -16,6 +17,8 @@ cover:
   alt: MotoRoute Pro landing page with a motorcycle parked by the water at sunset.
   caption: The landing page at matthewmacri.ca/motoroute.
 ---
+
+import PhoneShots from '../../components/PhoneShots.astro';
 
 ## Why
 
@@ -46,11 +49,15 @@ It runs on my own server behind nginx and a Cloudflare tunnel, next to this site
 
 ## On the phone
 
-The mobile app is the same planner built for the road, not the desktop. It's an Expo app with a handful
-of screens: plan a route, browse and navigate saved routes, a live weather view for the ride, a friends
+The mobile app is the same planner built for the road, not the desktop — **live on the App Store**. It's
+an Expo app: plan a route, browse and navigate saved routes, a live weather view for the ride, a friends
 map and chat for riding together, and a profile. Routes sync down to WatermelonDB so they open and
-navigate with no signal — which is most of the roads worth riding. The iOS build is in progress toward an
-App Store release.
+navigate with no signal, which is most of the roads worth riding.
+
+<PhoneShots
+  dir="motoroute-app"
+  labels={{ plan_route: 'Plan a route', navigation: 'Navigation', saved_routes: 'Saved routes', weather: 'Weather', friends_map: 'Friends map', chat: 'Chat' }}
+/>
 
 ## The hard part
 

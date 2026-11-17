@@ -19,6 +19,7 @@ const projects = defineCollection({
         .object({
           live: z.string().url().optional(),
           repo: z.string().optional(), // owner/name on GitHub, public repos only
+          app: z.string().url().optional(), // App Store / Play Store listing
         })
         .default({}),
       tier: z.union([z.literal(1), z.literal(2)]),
