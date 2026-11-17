@@ -15,8 +15,8 @@ const shots = Object.entries(all)
   .filter(([path]) => path.includes(`/assets/${dir}/`))
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([path, mod]) => {
-    const key = path.split('/').pop()!.replace(/\.[^.]+$/, '').replace(/^\d+_/, '');
-    return { img: mod.default, label: labels[key] ?? key.replace(/_/g, ' ') };
+    const key = path.split('/').pop()!.replace(/\.[^.]+$/, '').replace(/^\d+[-_]/, '');
+    return { img: mod.default, label: labels[key] ?? key.replace(/[-_]/g, ' ') };
   });
 ---
 

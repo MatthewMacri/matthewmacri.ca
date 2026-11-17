@@ -1,15 +1,23 @@
 ---
 title: Ice Hockey Shifts Companion
-summary: A phone app that opens the shift data the Garmin watch records — the breakdown Garmin Connect flattens into one line.
-summaryFr: "Une app mobile qui ouvre les données de présences enregistrées par la montre Garmin — le détail que Garmin Connect aplatit en une seule ligne."
+summary: The phone app for the Garmin hockey watch app — it opens the shift breakdown Garmin Connect flattens into one line. Live on the App Store.
+summaryFr: "L’app mobile pour l’app de montre Garmin — elle ouvre le détail des présences que Garmin Connect aplatit en une seule ligne. Sur l’App Store."
 year: 2026
 role: Solo
 context: personal
 stack: [Expo, React Native, TypeScript, Garmin FIT SDK, SQLite]
-status: in progress
-tier: 2
-order: 16
+status: live
+links:
+  app: https://apps.apple.com/ca/app/ice-hockey-shifts/id6834253852
+tier: 1
+order: 3
+cover:
+  src: ../../assets/ice-companion-cover.png
+  alt: Three screens of the Ice Hockey Shifts app — a game summary, the per-shift breakdown with heart-rate zones, and season stats.
+  caption: Ice Hockey Shifts on the App Store.
 ---
+
+import PhoneShots from '../../components/PhoneShots.astro';
 
 The [Garmin Hockey Tracker](/work/garmin-hockey-tracker/) writes every shift into the activity file, but
 Garmin Connect never draws them — it shows one flat heart-rate graph for the whole game. This is the
@@ -20,13 +28,19 @@ phone app that reads that file and shows the game the way it was actually played
 It opens the activity the watch recorded and lays out what Connect leaves out:
 
 - **Shift by shift** — each time on the ice and each spell on the bench, with its length and heart rate.
-- **On-ice vs bench** — the split that tells you how hard you actually worked, side by side.
-- **A game you can scroll through** rather than a single averaged line.
+- **On-ice vs bench heart rate** — the split that tells you how hard you actually worked, by zone.
+- **Season stats** — ice time per game, ice share and rotation across every game you've played.
+- **Editable shifts** — a wrong line change or a warm-up lap can be split or fixed by hand.
 
 It reads the Garmin FIT file directly with Garmin's own SDK, stores games locally in SQLite, and signs in
-with Apple. It's built in Expo for both iOS and Android.
+with Apple. It's built in Expo for iOS.
+
+<PhoneShots
+  dir="ice-companion-app"
+  labels={{ game_summary: 'Game summary', shifts: 'Shift breakdown', season: 'Season', edit_shifts: 'Edit shifts', split_a_shift: 'Split a shift', games: 'Games' }}
+/>
 
 ## Status
 
-In progress — the core of reading a FIT file and drawing the shifts works; I'm building out the game
-history and the per-shift detail screens before a store release.
+Live on the App Store. It pairs with the Garmin watch app, which does the recording; this is where the
+game gets read back and broken down.
