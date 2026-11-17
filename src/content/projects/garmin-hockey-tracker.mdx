@@ -1,0 +1,49 @@
+---
+title: Garmin Hockey Tracker
+summary: "A Garmin watch app that tracks a hockey game from your wrist — one press at the faceoff, then it detects every shift on its own."
+summaryFr: "Une app pour montre Garmin qui suit un match de hockey depuis le poignet : une pression à la mise au jeu, puis elle détecte chaque présence toute seule."
+year: 2026
+role: Solo
+context: personal
+stack: [Connect IQ, Monkey C, Garmin, FIT]
+status: live
+links:
+  live: https://apps.garmin.com/apps/4b5a5a43-135d-456e-91a0-c1dbca4ada2d
+  repo: MatthewMacri/Garmin-Hockey-Tracker
+tier: 2
+order: 15
+cover:
+  src: ../../assets/garmin-hockey.jpg
+  alt: The Ice Hockey Shifts watch app, showing the shift clock on the ice and on the bench and a post-game summary.
+  caption: The watch app on the Connect IQ store.
+---
+
+Garmin Connect records a hockey game as one long blob of heart rate. It never splits the shifts from the
+time on the bench, which is the part that actually tells you how hard you played. This is a Connect IQ
+app that fixes that from the wrist alone.
+
+## What it does
+
+You press start at the opening faceoff and never touch the watch again. From there it works out when
+you're on the ice and when you're on the bench by itself, and keeps one continuous game clock running
+until you stop it.
+
+- **Automatic shift detection** — no button per line change; the app decides when you're on and off.
+- **One continuous game clock** — no periods to set up, nothing that ends the activity on a timer. A real
+  game runs longer than the sum of its periods.
+- **A shift clock you feel, not read** — the ring around the screen runs green to amber to red as a shift
+  runs long, with a full-strength buzz felt through a glove at your target length.
+- **On-ice heart rate, kept separate from bench heart rate** — the number the app exists to produce.
+- **A post-game summary** written into a real Garmin activity that syncs to Connect like any other sport.
+
+## How it's built
+
+It's written in Monkey C for Connect IQ. I built and tested it on a Forerunner 570, but the layout is
+resolution-independent, so a single build covers the 126 watches listed in the manifest — most of the
+current Garmin range. It's open source under MIT and published on the Connect IQ store.
+
+## Where it fits
+
+This is the watch end of a small hockey-tracking system. A companion phone app draws the shift data that
+Garmin Connect leaves flat, and a separate hardware project adds per-leg skating metrics from sensors in
+the shin guards — both described elsewhere in this list.
