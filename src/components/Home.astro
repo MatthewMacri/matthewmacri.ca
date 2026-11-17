@@ -13,7 +13,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const s = t[lang];
-const selected = (await getCollection('projects', (p) => p.data.tier === 1)).sort((a, b) => a.data.order - b.data.order);
+const selected = (await getCollection('projects', (p) => p.data.tier === 1 && p.data.context !== 'work' && p.data.context !== 'company')).sort((a, b) => a.data.order - b.data.order);
 const updated = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', { year: 'numeric', month: 'long', day: 'numeric' }).format(
   new Date(site.nowUpdated + 'T12:00:00'),
 );

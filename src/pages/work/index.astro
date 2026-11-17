@@ -6,32 +6,40 @@ import SectionHead from '../../components/SectionHead.astro';
 import { archive } from '../../data/archive';
 
 const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const main = all.filter((p) => p.data.tier === 1);
-const more = all.filter((p) => p.data.tier === 2);
+// Where I work and my own company — not personal projects.
+const companies = all.filter((p) => p.data.context === 'work' || p.data.context === 'company');
+const personal = all.filter((p) => p.data.context !== 'work' && p.data.context !== 'company');
+const featured = personal.filter((p) => p.data.tier === 1);
+const smaller = personal.filter((p) => p.data.tier !== 1);
 ---
 
-<Base title="Work" description="Projects by Matthew Macri: MotoRoute Pro, KernelOp, Tokidos, a self-hosted server, and smaller work from school and hackathons.">
+<Base title="Work" description="Matthew Macri's work: Tokidos, Euro Gear and KernelOp, plus personal projects like MotoRoute Pro and a Garmin hockey app.">
   <section>
-    <p class="meta kicker">{all.length} projects · {archive.length} archived</p>
+    <p class="meta kicker">{companies.length} roles · {personal.length} projects · {archive.length} archived</p>
     <h1>Work</h1>
     <p class="muted intro">
-      The main projects first, then smaller ones, then school work. Each one has its own page with how it was built.
-      Work I did for employers is described but not linked.
+      Where I work and the company I run, then my own projects, then smaller ones and school work.
+      Each has its own page. Work I did for employers is described but not linked.
     </p>
   </section>
 
+  <section aria-labelledby="co-h">
+    <SectionHead id="co-h" num="01" title="Work & companies" />
+    <ul class="plain grid two">{companies.map((p) => <ProjectCard project={p} />)}</ul>
+  </section>
+
   <section aria-labelledby="main-h">
-    <SectionHead id="main-h" num="01" title="Main projects" />
-    <ul class="plain grid two">{main.map((p) => <ProjectCard project={p} />)}</ul>
+    <SectionHead id="main-h" num="02" title="Projects" />
+    <ul class="plain grid two">{featured.map((p) => <ProjectCard project={p} />)}</ul>
   </section>
 
   <section aria-labelledby="more-h">
-    <SectionHead id="more-h" num="02" title="Smaller projects" />
-    <ul class="plain grid three">{more.map((p) => <ProjectCard project={p} size="compact" />)}</ul>
+    <SectionHead id="more-h" num="03" title="Smaller projects" />
+    <ul class="plain grid three">{smaller.map((p) => <ProjectCard project={p} size="compact" />)}</ul>
   </section>
 
   <section aria-labelledby="archive-h">
-    <SectionHead id="archive-h" num="03" title="Archive" />
+    <SectionHead id="archive-h" num="04" title="Archive" />
     <p class="muted small">Coursework and early projects, kept for the record.</p>
     <table class="archive">
       <thead>
