@@ -7,13 +7,24 @@ role: Solo
 context: personal
 stack: [Expo, React Native, Fastify, PostgreSQL, TypeScript]
 status: in progress
-tier: 2
-order: 17
+tier: 1
+order: 4
+cover:
+  src: ../../assets/likewise-cover.png
+  alt: Three screens of the Likewise dating app — the Discover deck, your room of likes waiting to be answered, and a new match.
+  caption: App Store screenshots from the build in progress — not yet on the public App Store.
 ---
+
+import PhoneShots from '../../components/PhoneShots.astro';
 
 Most dating apps reward whoever sends the most likes, so a few profiles get flooded and everyone else
 goes unseen. Likewise is my attempt at the opposite: a design where attention is shared fairly instead of
 won by volume.
+
+<PhoneShots
+  dir="likewise-app"
+  labels={{ discover: 'Discover', like_sheet: 'Like something specific', your_room: 'Your room', match: 'A match', verify: 'Verify', menu: 'Menu', dealbreakers: 'Dealbreakers' }}
+/>
 
 ## The idea
 
@@ -32,5 +43,6 @@ building the product, the backend and the brand.
 
 ## Status
 
-In progress and pre-launch — I'm building the onboarding, the matching logic and the safety tooling
-toward a first test. No public build or screenshots yet.
+In progress and pre-launch. The app, backend and brand are built — the screenshots above are the real
+App Store set — and I'm finishing the onboarding, matching logic and safety tooling toward release. It
+isn't on the public App Store yet; the store link goes up here the day it ships.
