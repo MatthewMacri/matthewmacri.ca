@@ -26,8 +26,8 @@ export const experience: Employer[] = [
         title: { en: 'Full-stack developer', fr: 'Développeur full-stack' },
         period: { en: 'May 2026 – now', fr: 'mai 2026 – auj.' },
         note: {
-          en: 'Rebuilding the app in Flutter to replace the WebView + native hybrid. Auth, WebView performance, cross-device testing.',
-          fr: "Réécriture de l'application en Flutter pour remplacer l'hybride WebView + natif. Authentification, performance WebView, tests multiappareils.",
+          en: 'Built a bilingual game-recommendation engine and a Shopify data pipeline; now rebuilding the app in Flutter to replace the WebView + native hybrid.',
+          fr: "Création d'un moteur de recommandation de jeux bilingue et d'un pipeline de données Shopify; réécriture de l'app en Flutter pour remplacer l'hybride WebView + natif.",
         },
       },
       {
