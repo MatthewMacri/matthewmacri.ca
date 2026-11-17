@@ -18,9 +18,17 @@ cover:
   caption: The watch app on the Connect IQ store.
 ---
 
+import PhoneShots from '../../components/PhoneShots.astro';
+
 Garmin Connect records a hockey game as one long blob of heart rate. It never splits the shifts from the
 time on the bench, which is the part that actually tells you how hard you played. This is a Connect IQ
 app that fixes that from the wrist alone.
+
+<PhoneShots
+  dir="garmin-app"
+  variant="watch"
+  labels={{ ready: 'Ready', on_the_ice: 'On the ice', on_the_bench: 'On the bench', hold_to_pause: 'Hold to pause', menu: 'Menu', summary: 'Summary' }}
+/>
 
 ## What it does
 

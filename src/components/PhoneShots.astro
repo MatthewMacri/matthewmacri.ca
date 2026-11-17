@@ -6,9 +6,10 @@ import { Image } from 'astro:assets';
 interface Props {
   dir: string;
   labels?: Record<string, string>;
+  variant?: 'phone' | 'watch';
 }
 
-const { dir, labels = {} } = Astro.props;
+const { dir, labels = {}, variant = 'phone' } = Astro.props;
 
 const all = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{png,jpg,jpeg,webp}', { eager: true });
 const shots = Object.entries(all)
@@ -20,10 +21,10 @@ const shots = Object.entries(all)
   });
 ---
 
-<div class="phone-shots" role="list">
+<div class:list={['phone-shots', variant]} role="list">
   {shots.map(({ img, label }) => (
     <figure role="listitem">
-      <Image src={img} alt={label} widths={[260, 520]} sizes="220px" loading="lazy" />
+      <Image src={img} alt={label} widths={[260, 520]} sizes={variant === 'watch' ? '160px' : '220px'} loading="lazy" />
       <figcaption>{label}</figcaption>
     </figure>
   ))}
@@ -59,5 +60,14 @@ const shots = Object.entries(all)
     font: 12px/18px var(--mono);
     color: var(--muted);
     text-transform: capitalize;
+  }
+
+  .phone-shots.watch figure { width: 160px; }
+  .phone-shots.watch :global(img) {
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    background: #000;
+    border: 1px solid var(--rule);
   }
 </style>
