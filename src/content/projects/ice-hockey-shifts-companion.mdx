@@ -1,0 +1,32 @@
+---
+title: Ice Hockey Shifts Companion
+summary: A phone app that opens the shift data the Garmin watch records — the breakdown Garmin Connect flattens into one line.
+summaryFr: "Une app mobile qui ouvre les données de présences enregistrées par la montre Garmin — le détail que Garmin Connect aplatit en une seule ligne."
+year: 2026
+role: Solo
+context: personal
+stack: [Expo, React Native, TypeScript, Garmin FIT SDK, SQLite]
+status: in progress
+tier: 2
+order: 16
+---
+
+The [Garmin Hockey Tracker](/work/garmin-hockey-tracker/) writes every shift into the activity file, but
+Garmin Connect never draws them — it shows one flat heart-rate graph for the whole game. This is the
+phone app that reads that file and shows the game the way it was actually played.
+
+## What it does
+
+It opens the activity the watch recorded and lays out what Connect leaves out:
+
+- **Shift by shift** — each time on the ice and each spell on the bench, with its length and heart rate.
+- **On-ice vs bench** — the split that tells you how hard you actually worked, side by side.
+- **A game you can scroll through** rather than a single averaged line.
+
+It reads the Garmin FIT file directly with Garmin's own SDK, stores games locally in SQLite, and signs in
+with Apple. It's built in Expo for both iOS and Android.
+
+## Status
+
+In progress — the core of reading a FIT file and drawing the shifts works; I'm building out the game
+history and the per-shift detail screens before a store release.
